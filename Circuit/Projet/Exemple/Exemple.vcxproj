@@ -107,11 +107,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ChargementImagePNG.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Circuit.cpp" />
-    <ClCompile Include="Dir3D.cpp" />
+    <ClCompile Include="Dir3D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ParametrageMaterielEtLumieres.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -120,45 +119,19 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="PNG\ChargePngFile.cpp" />
-    <ClCompile Include="PNG\Espace3UC.cpp" />
-    <ClCompile Include="PNG\Image.cpp" />
-    <ClCompile Include="PNG\ImageUtils.cpp" />
-    <ClCompile Include="PNG\PngFile.cpp" />
-    <ClCompile Include="PNG\Png\adler32.c" />
-    <ClCompile Include="PNG\Png\compress.c" />
-    <ClCompile Include="PNG\Png\crc32.c" />
-    <ClCompile Include="PNG\Png\deflate.c" />
-    <ClCompile Include="PNG\Png\gzio.c" />
-    <ClCompile Include="PNG\Png\infback.c" />
-    <ClCompile Include="PNG\Png\inffast.c" />
-    <ClCompile Include="PNG\Png\inflate.c" />
-    <ClCompile Include="PNG\Png\inftrees.c" />
-    <ClCompile Include="PNG\Png\png.c" />
-    <ClCompile Include="PNG\Png\pngerror.c" />
-    <ClCompile Include="PNG\Png\pngget.c" />
-    <ClCompile Include="PNG\Png\pngmem.c" />
-    <ClCompile Include="PNG\Png\pngpread.c" />
-    <ClCompile Include="PNG\Png\pngread.c" />
-    <ClCompile Include="PNG\Png\pngrio.c" />
-    <ClCompile Include="PNG\Png\pngrtran.c" />
-    <ClCompile Include="PNG\Png\pngrutil.c" />
-    <ClCompile Include="PNG\Png\pngset.c" />
-    <ClCompile Include="PNG\Png\pngtrans.c" />
-    <ClCompile Include="PNG\Png\pngwio.c" />
-    <ClCompile Include="PNG\Png\pngwrite.c" />
-    <ClCompile Include="PNG\Png\pngwtran.c" />
-    <ClCompile Include="PNG\Png\pngwutil.c" />
-    <ClCompile Include="PNG\Png\trees.c" />
-    <ClCompile Include="PNG\Png\uncompr.c" />
-    <ClCompile Include="PNG\Png\zutil.c" />
-    <ClCompile Include="Pos3d.cpp" />
-    <ClCompile Include="Rt3d.cpp" />
+    <ClCompile Include="Pos3d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Rt3d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="TD2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="TG3D.cpp" />
+    <ClCompile Include="TG3D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="TP3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
@@ -172,16 +145,32 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="CH3D.cpp" />
-    <ClCompile Include="Tr3d.cpp" />
+    <ClCompile Include="CH3D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Tr3d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CH3D.h" />
-    <ClInclude Include="Dir3D.h" />
-    <ClInclude Include="Pos3d.h" />
-    <ClInclude Include="Rt3D.h" />
-    <ClInclude Include="TG3D.h" />
-    <ClInclude Include="Tr3d.h" />
+    <ClInclude Include="CH3D.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Dir3D.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Pos3d.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Rt3D.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="TG3D.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Tr3d.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
