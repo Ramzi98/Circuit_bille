@@ -2,10 +2,11 @@
 /*                                              */
 /* Auteur: Nicolas JANEY                        */
 /* nicolas.janey@univ-fcomte.fr                 */
-/* Septembre 2012                               */
+/* Mars 2021                                    */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -14,16 +15,19 @@
 /* Variables et constantes globales             */
 /* pour les angles et les couleurs utilises     */
 
-static float r0 = 0.0F;
-static float r1 = 0.0F;
-static float r2 = 0.0F;
-static float r3 = 0.0F;
-static float r4 = 0.0F;
+static float rx = 0.0F;
+static float ry = 0.0F;
+static float rz = 0.0F;
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
 static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
 static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
+
+static int obj = 1;
+
+
+
 
 /* Affichage des informations relatives         */
 /* a OpenGL                                     */
@@ -39,9 +43,8 @@ static void informationsOpenGL(void) {
 /* OpenGL ne changeant pas au cours de la vie   */
 /* du programme                                 */
 
-void init(void) {
+static void init(void) {
     const GLfloat shininess[] = { 50.0 };
-    glMaterialfv(GL_FRONT, GL_SPECULAR, blanc);
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, rouge);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, jaune);
@@ -58,26 +61,316 @@ void init(void) {
 
 /* Scene dessinee                               */
 
-void scene(void) {
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327950288
+#endif
+
+float longeur = 4.0F * (10.0F * 2.0 * M_PI * 5.0F / 4.0F);
+float delta = 0.2F;
+float distance = 0.0F;
+
+
+static void solidCylindre(double rayon, double hauteur, int nbFTube, int nbFHauteur) {
+    GLboolean nm = glIsEnabled(GL_NORMALIZE);
+    if (!nm)
+        glEnable(GL_NORMALIZE);
+    float normale[4];
+    glGetFloatv(GL_CURRENT_NORMAL, normale);
     glPushMatrix();
-    glRotatef(r0, 0.0F, 0.0F, 1.0F);
-    glRotatef(r1, 0.0F, 1.0F, 0.0F);
-    glutSolidTorus(0.7, 10.0, 18, 72);
-    glRotatef(r2, 1.0F, 0.0F, 0.0F);
-    glutSolidTorus(0.7, 8.6F, 18, 72);
-    glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
-    glRotatef(r3, 1.0F, 0.0F, 0.0F);
-    glutSolidTorus(0.7, 7.2F, 18, 72);
-    glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
-    glRotatef(r4, 1.0F, 0.0F, 0.0F);
-    glutSolidTorus(0.7, 5.8F, 18, 72);
+    for (int j = 0; j < nbFHauteur; j++) {
+        float hi = hauteur / 2 - j * hauteur / nbFHauteur;
+        float hf = hi - hauteur / nbFHauteur;
+        glBegin(GL_QUAD_STRIP);
+        for (int i = 0; i <= nbFTube; i++) {
+            float a = (2 * M_PI * i) / nbFTube;
+            float cs = cos(a);
+            float sn = -sin(a);
+            glNormal3f(cs, 0.0F, sn);
+            float x = rayon * cs;
+            float z = rayon * sn;
+            glVertex3f(x, hi, z);
+            glVertex3f(x, hf, z);
+        }
+        glEnd();
+    }
+    glPopMatrix();
+    glNormal3f(normale[0], normale[1], normale[2]);
+    if (!nm)
+        glDisable(GL_NORMALIZE);
+}
+
+void solidTore(double rayonTube, double rayonTore, double angleI, double angleF, int nbTube, int nbTore) {
+    for (int i = 0; i < nbTore; i++) {
+        float da = angleF - angleI;
+        float alphai = angleI + da * i / nbTore;
+        float alphaj = alphai + da / nbTore;
+        float cosalphai = cos(alphai);
+        float sinalphai = sin(alphai);
+        float cosalphaj = cos(alphaj);
+        float sinalphaj = sin(alphaj);
+        glBegin(GL_QUAD_STRIP);
+        for (int j = 0; j <= nbTube; j++) {
+            float beta = 2 * M_PI * j / nbTube;
+            float cosbeta = cos(beta);
+            float sinbita = sin(beta);
+            float x1 = (rayonTore + rayonTube * cosbeta) * cosalphai;
+            float y1 = (rayonTore + rayonTube * cosbeta) * sinalphai;
+            float z1 = rayonTube * sinbita;
+            glNormal3f(cosbeta * cosalphai, cosbeta * sinalphai, sinbita);
+            glVertex3f(x1, y1, z1);
+            float x2 = (rayonTore + rayonTube * cosbeta) * cosalphaj;
+            float y2 = (rayonTore + rayonTube * cosbeta) * sinalphaj;
+            float z2 = rayonTube * sinbita;
+            glNormal3f(cosbeta * cosalphaj, cosbeta * sinalphaj, sinbita);
+            glVertex3f(x2, y2, z2);
+        }
+        glEnd();
+    }
+}
+
+void virage_bas(double x1, double y1, double z1, double x2, double y2, double z2)
+{
+    glNormal3f(x1, y1, -z1);
+    glVertex3f(x1, y1, z1);
+
+    glNormal3f(x2, y1, -z2);
+    glVertex3f(x2, y1, z2);
+
+
+    glNormal3f(x1, y2, -z1);
+    glVertex3f(x1, y2, z1);
+
+    glNormal3f(x2, y2, -z2);
+    glVertex3f(x2, y2, z2);
+}
+
+void virage_board_interieur(double x1, double y1, double z1, double x2, double y2, double z2)
+{
+    glNormal3f(x1, y1, -z1);
+    glVertex3f(x1, y1, z1);
+
+    glNormal3f(x2, y1, -z2);
+    glVertex3f(x2, y1, z2);
+
+
+    glNormal3f(x1, y2, -z1);
+    glVertex3f(x1, y2, z1);
+
+    glNormal3f(x2, y2, -z2);
+    glVertex3f(x2, y2, z2);
+}
+
+void virage_board_exterieur(double x1, double y1, double z1, double x2, double y2, double z2)
+{
+    glNormal3f(x1, y1, -z1);
+    glVertex3f(x1, y1, z1);
+
+    glNormal3f(x2, y1, -z2);
+    glVertex3f(x2, y1, z2);
+
+
+    glNormal3f(x1, y2, -z1);
+    glVertex3f(x1, y2, z1);
+
+    glNormal3f(x2, y2, -z2);
+    glVertex3f(x2, y2, z2);
+}
+
+
+
+void Virage(double size, double rayonTore, double angleI, double angleF, int nbCube) {
+    int largeur = 20;
+    int hauteur_board = 3;
+
+    glBegin(GL_QUAD_STRIP);
+
+    for (int i = 0; i < nbCube; i++) {
+        float da = angleF - angleI;
+
+        float alphai = angleI + da * i / nbCube;
+        float alphaj = alphai + da / nbCube;
+
+        float cosalphai = cos(alphai);
+        float sinalphai = sin(alphai);
+        float cosalphaj = cos(alphaj);
+        float sinalphaj = sin(alphaj);
+
+        float x1b = -rayonTore * cosalphai;
+        float y1b = 0;
+        float z1b = rayonTore * sinalphai;
+
+        float x2b = -(rayonTore+largeur) * cosalphaj;
+        float y2b = 0;
+        float z2b = (rayonTore + largeur) * sinalphaj;
+
+        virage_bas(x1b, y1b, z1b, x2b, y2b, z2b);
+
+    }
+
+    
+
+    for (int i = 0; i < nbCube; i++) {
+        float da = angleF - angleI;
+
+        float alphai = angleI + da * i / nbCube;
+        float alphaj = alphai + da / nbCube;
+
+        float cosalphai = cos(alphai);
+        float sinalphai = sin(alphai);
+        float cosalphaj = cos(alphaj);
+        float sinalphaj = sin(alphaj);
+
+
+        float x1i = -rayonTore * cosalphai;
+        float y1i = 0;
+        float z1i = rayonTore * sinalphai;
+
+        float x2i = -rayonTore * cosalphaj;
+        float y2i = hauteur_board;
+        float z2i = rayonTore * sinalphaj;
+        virage_board_interieur(x1i, y1i, z1i, x2i, y2i, z2i);
+
+    }
+
+    
+    for (int i = 0; i < nbCube; i++) {
+        float da = angleF - angleI;
+
+        float alphai = angleI + da * i / nbCube;
+        float alphaj = alphai + da / nbCube;
+
+        float cosalphai = cos(alphai);
+        float sinalphai = sin(alphai);
+        float cosalphaj = cos(alphaj);
+        float sinalphaj = sin(alphaj);
+
+        float x1e = -(rayonTore + largeur) * cosalphai;
+        float y1e = 0;
+        float z1e = (rayonTore + largeur) * sinalphai;
+
+        float x2e = -(rayonTore + largeur) * cosalphaj;
+        float y2e = hauteur_board;
+        float z2e = (rayonTore + largeur) * sinalphaj;
+        virage_board_exterieur(x1e, y1e, z1e, x2e, y2e, z2e);
+
+    }
+    
+
+
+
+    glEnd();
+    
+}
+
+
+void solidTore(double rayonTube, double rayonTore, int nbFTube, int nbFTore) {
+    solidTore(rayonTube, rayonTore, 0.0, 2 * M_PI, nbFTube, nbFTore);
+}
+
+void Sphere(float x, float y, float z)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glutSolidSphere(1.2, 36, 36);
+    glPopMatrix();
+}
+
+static void scene1(double x ,double y , double z) {
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    // Axe du tunnel
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
+
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, 0.0);
+    /*
+    //Plan
+    glPushMatrix();
+    glScalef(80.0, 1, 4.0);
+    glutSolidCube(1.0);
+    glPopMatrix();
+
+    //board gauche
+    glPushMatrix();
+    glTranslatef(0.0, 1.0, 2.0);
+    glPushMatrix();
+    glScalef(80.0, 3.0, 1.0);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    glPopMatrix();
+
+    //board droite
+    glPushMatrix();
+    glTranslatef(0.0, 1.0, -2.0);
+    glPushMatrix();
+    glScalef(80.0, 3.0, 1.0);
+    glutSolidCube(1.0);
+    glPopMatrix();
+    glPopMatrix();
+    */
+
+    //Virage
+
+    glPushMatrix();
+    //glTranslatef(-5.0F, 0.0F, 5.0F);
+
+    glPushMatrix();
+    //glScalef(80.0, 1, 4.0);
+    //glutSolidCube(1.0);
+    //solidTore(0.05F, 5.0F, 0, M_PI, 18, 100);
+    Virage(1.0, 20.0, 0, M_PI, 100);
+    glPopMatrix();
+
+    glPopMatrix();
+
+
+
+
+    glPopMatrix();
+
+
+    
+    
+    glPopMatrix();
+}
+
+static void scene2(void) {
+    glPushMatrix();
+    // Axe du tunnel
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
+    glPushMatrix();
+    glTranslatef(8.0F, 0.0F, 0.0F);
+    glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+    solidTore(0.05, 8.0, 18, 180);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-8.0F, 0.0F, 0.0F);
+    glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+    solidTore(0.05, 8.0, 18, 180);
+    glPopMatrix();
+    // Tunnel
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
+    for (int i = 0; i <= 36; i++) {
+        glPushMatrix();
+        glTranslatef(8.0F, 0.0F, 0.0F);
+        glRotatef(i * 180.0F / 18, 0.0F, 1.0F, 0.0F);
+        glTranslatef(8.0F, 0.0F, 0.0F);
+        solidTore(0.1, 2.0, 18, 72);
+        glPopMatrix();
+        glPushMatrix();
+        glTranslatef(-8.0F, 0.0F, 0.0F);
+        glRotatef(i * 180.0F / 18, 0.0F, 1.0F, 0.0F);
+        glTranslatef(-8.0F, 0.0F, 0.0F);
+        solidTore(0.1, 2.0, 18, 72);
+        glPopMatrix();
+    }
     glPopMatrix();
 }
 
 /* Fonction executee lors d'un rafraichissement */
 /* de la fenetre de dessin                      */
 
-void display(void) {
+static void display(void) {
     printf("D\n");
     glClearColor(0.5F, 0.5F, 0.5F, 0.5F);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -88,7 +381,16 @@ void display(void) {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
     glPushMatrix();
-    scene();
+    gluLookAt(5.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    glRotatef(rz, 0.0F, 0.0F, 1.0F);
+    glRotatef(ry, 0.0F, 1.0F, 0.0F);
+    glRotatef(rx, 1.0F, 0.0F, 0.0F);
+    if (obj) {
+        scene1(0.0,0.0,0.0);
+    }
+    else {
+        scene2();
+    }
     glPopMatrix();
     glFlush();
     glutSwapBuffers();
@@ -100,44 +402,103 @@ void display(void) {
 /* Fonction executee lorsqu'aucun evenement     */
 /* n'est en file d'attente                      */
 
-void idle(void) {
+static void idle(void) {
     printf("I\n");
-    r0 += 0.3355F;
-    r1 += 0.6117F;
-    r2 += 0.4174F;
-    r3 += 0.5715F;
-    r4 += 0.6433F;
+    /*
+    if (x1 == 10 && 21 < 10)
+    {
+        z1++;
+        //printf("X = %f", X);
+        //printf("Z = %f", Z);
+    }
+
+    */
+
+
     glutPostRedisplay();
 }
 
 /* Fonction executee lors d'un changement       */
 /* de la taille de la fenetre OpenGL            */
 
-void reshape(int x, int y) {
-    printf("R\n");
+static void reshape(int x, int y) {
     glViewport(0, 0, x, y);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(80.0F, (float)x / y, 1.0, 40.0);
+    gluPerspective(70.0F, (float)x / y, 1.0, 40.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+}
+
+/* Fonction executee lors de l'appui            */
+/* d'une touche non alphanumerique du clavier   */
+
+static void special(int key, int x, int y) {
+    switch (key) {
+    case GLUT_KEY_UP:
+        rx += 1.0F;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_DOWN:
+        rx -= 1.0F;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_LEFT:
+        ry += 1.0F;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_RIGHT:
+        ry -= 1.0F;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_PAGE_UP:
+        rz += 1.0F;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_PAGE_DOWN:
+        rz -= 1.0F;
+        glutPostRedisplay();
+        break;
+    }
 }
 
 /* Fonction executee lors de l'appui            */
 /* d'une touche alphanumerique du clavier       */
 
-void keyboard(unsigned char key, int x, int y) {
-    printf("K\n");
+static void keyboard(unsigned char key, int x, int y) {
     switch (key) {
+    case 'f':
+    case 'F':
+    { static int fullScreen = 0;
+    static int tx;
+    static int ty;
+    static int px;
+    static int py;
+    fullScreen = !fullScreen;
+    if (fullScreen) {
+        px = glutGet(GLUT_WINDOW_X);
+        py = glutGet(GLUT_WINDOW_Y);
+        tx = glutGet(GLUT_WINDOW_WIDTH);
+        ty = glutGet(GLUT_WINDOW_HEIGHT);
+        glutFullScreen();
+    }
+    else
+        glutPositionWindow(px, py);
+    glutReshapeWindow(tx, ty); }
+    break;
     case 0x0D:
-    { static int anim = 1;
+    { static int anim = 0;
     anim = !anim;
     glutIdleFunc((anim) ? idle : NULL); }
     break;
     case ' ':
     { informationsOpenGL(); }
     break;
+    case 'o':
+    case 'O':
+        obj = !obj;
+        glutPostRedisplay();
+        break;
     case 0x1B:
         exit(0);
         break;
@@ -149,13 +510,13 @@ void keyboard(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
-    glutInitWindowSize(300, 300);
+    glutInitWindowSize(480, 320);
     glutInitWindowPosition(50, 50);
-    glutCreateWindow("Des anneaux en rotation");
+    glutCreateWindow("Un circuit matérialisé par des anneaux");
     init();
     glutKeyboardFunc(keyboard);
     glutReshapeFunc(reshape);
-    glutIdleFunc(idle);
+    glutSpecialFunc(special);
     glutDisplayFunc(display);
     glutMainLoop();
     return(0);
