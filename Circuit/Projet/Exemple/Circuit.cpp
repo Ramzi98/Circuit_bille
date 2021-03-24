@@ -16,11 +16,20 @@
 /* pour les angles et les couleurs utilises     */
 
 
-int hauteur_bord = 3;
+double hauteur_bord = 3;
+double largeur = 20;
+double rayonTore = 20;
+
+
 
 static float rx = 0.0F;
 static float ry = 0.0F;
 static float rz = 0.0F;
+
+static float dx = 0.0F;
+static float dy = 0.0F;
+static float dz = 0.0F;
+
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
 static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
@@ -89,6 +98,52 @@ void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 
     
     glEnd();
+}
+
+
+void etage1_3(double x, double y, double z)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+   
+
+    //Bord interieur 1 
+    double p1[] = { 0.0, 0.0, -rayonTore };
+    double p2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
+    double p4[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(p1, p2, p3, p4);
+
+
+    //Bord exterieur 1
+    double p5[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double p6[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p7[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
+    double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    Circuit_droit(p5, p6, p7, p8);
+
+    //La Base 1
+    double p21[] = { 0.0, 0.0, -rayonTore };
+    double p22[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p23[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    Circuit_droit(p21, p22, p23, p24);
+
+    //Fin1
+    double pf1[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double pf2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double pf3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
+    double pf4[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
+    Circuit_droit(pf1, pf2, pf3, pf4);
+
+    //Fin1
+    double pf5[] = { 0.0, 0.0, -rayonTore };
+    double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double pf7[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    double pf8[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(pf5, pf6, pf7, pf8);
+
+    glPopMatrix();
 }
 
 
@@ -274,40 +329,12 @@ void Sphere(float x, float y, float z)
 
 static void etage2(double x ,double y , double z) {
 
-    double rayonTore = 20;
-    double largeur = 20;
-
     glPushMatrix();
     glTranslatef(x, y, z);
 
     // Axe du tunnel
     glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
-
-    /*
-    //Plan
-    glPushMatrix();
-    glScalef(80.0, 1, 4.0);
-    glutSolidCube(1.0);
-    glPopMatrix();
-
-    //board gauche
-    glPushMatrix();
-    glTranslatef(0.0, 1.0, 2.0);
-    glPushMatrix();
-    glScalef(80.0, 3.0, 1.0);
-    glutSolidCube(1.0);
-    glPopMatrix();
-    glPopMatrix();
-
-    //board droite
-    glPushMatrix();
-    glTranslatef(0.0, 1.0, -2.0);
-    glPushMatrix();
-    glScalef(80.0, 3.0, 1.0);
-    glutSolidCube(1.0);
-    glPopMatrix();
-    glPopMatrix();
-    */
+    
     glPushMatrix();
     //Bord interieur 1 
     double p1[] = { 0.0, 0.0, -rayonTore };
@@ -402,8 +429,14 @@ static void display(void) {
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
     glRotatef(ry, 0.0F, 1.0F, 0.0F);
     glRotatef(rx, 1.0F, 0.0F, 0.0F);
+
+
+    glTranslatef(dx, dy, dz);
+
     if (obj) {
         etage2(0.0,0.0,0.0);
+        etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
+        etage1_3(-(rayonTore + largeur + 20 + largeur), -40.0, rayonTore + 2*largeur);
     }
     glPopMatrix();
     glFlush();
@@ -516,7 +549,36 @@ static void keyboard(unsigned char key, int x, int y) {
     case 0x1B:
         exit(0);
         break;
+
+    case 'z':
+        dy -= 1.0;
+        glutPostRedisplay();
+        break;
+    case 's':
+        dy += 1.0;
+        glutPostRedisplay();
+        break;
+    case 'd':
+        dx -= 1.0;
+        glutPostRedisplay();
+        break;
+    case 'q':
+        dx += 1.0;
+        glutPostRedisplay();
+        break;
+    case 'a':
+        dz -= 1.0;
+        glutPostRedisplay();
+        break;
+    case 'e':
+        dz += 1.0;
+        glutPostRedisplay();
+        break;
     }
+    
+        
+
+    
 }
 
 /* Fonction principale                          */
