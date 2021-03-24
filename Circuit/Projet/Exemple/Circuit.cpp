@@ -15,6 +15,9 @@
 /* Variables et constantes globales             */
 /* pour les angles et les couleurs utilises     */
 
+
+int hauteur_bord = 3;
+
 static float rx = 0.0F;
 static float ry = 0.0F;
 static float rz = 0.0F;
@@ -25,9 +28,6 @@ static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
 static int obj = 1;
-
-
-
 
 /* Affichage des informations relatives         */
 /* a OpenGL                                     */
@@ -70,63 +70,30 @@ float delta = 0.2F;
 float distance = 0.0F;
 
 
-static void solidCylindre(double rayon, double hauteur, int nbFTube, int nbFHauteur) {
-    GLboolean nm = glIsEnabled(GL_NORMALIZE);
-    if (!nm)
-        glEnable(GL_NORMALIZE);
-    float normale[4];
-    glGetFloatv(GL_CURRENT_NORMAL, normale);
-    glPushMatrix();
-    for (int j = 0; j < nbFHauteur; j++) {
-        float hi = hauteur / 2 - j * hauteur / nbFHauteur;
-        float hf = hi - hauteur / nbFHauteur;
-        glBegin(GL_QUAD_STRIP);
-        for (int i = 0; i <= nbFTube; i++) {
-            float a = (2 * M_PI * i) / nbFTube;
-            float cs = cos(a);
-            float sn = -sin(a);
-            glNormal3f(cs, 0.0F, sn);
-            float x = rayon * cs;
-            float z = rayon * sn;
-            glVertex3f(x, hi, z);
-            glVertex3f(x, hf, z);
-        }
-        glEnd();
-    }
-    glPopMatrix();
-    glNormal3f(normale[0], normale[1], normale[2]);
-    if (!nm)
-        glDisable(GL_NORMALIZE);
+
+void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
+{
+    glBegin(GL_QUADS);
+
+    glNormal3f(p1[0], p1[1], p1[2]);
+    glVertex3f(p1[0], p1[1], p1[2]);
+
+    glNormal3f(p2[0], p2[1], p2[2]);
+    glVertex3f(p2[0], p2[1], p2[2]);
+
+    glNormal3f(p3[0], p3[1], p3[2]);
+    glVertex3f(p3[0], p3[1], p3[2]);
+
+    glNormal3f(p4[0], p4[1], p4[2]);
+    glVertex3f(p4[0], p4[1], p4[2]);
+
+    
+    glEnd();
 }
 
-void solidTore(double rayonTube, double rayonTore, double angleI, double angleF, int nbTube, int nbTore) {
-    for (int i = 0; i < nbTore; i++) {
-        float da = angleF - angleI;
-        float alphai = angleI + da * i / nbTore;
-        float alphaj = alphai + da / nbTore;
-        float cosalphai = cos(alphai);
-        float sinalphai = sin(alphai);
-        float cosalphaj = cos(alphaj);
-        float sinalphaj = sin(alphaj);
-        glBegin(GL_QUAD_STRIP);
-        for (int j = 0; j <= nbTube; j++) {
-            float beta = 2 * M_PI * j / nbTube;
-            float cosbeta = cos(beta);
-            float sinbita = sin(beta);
-            float x1 = (rayonTore + rayonTube * cosbeta) * cosalphai;
-            float y1 = (rayonTore + rayonTube * cosbeta) * sinalphai;
-            float z1 = rayonTube * sinbita;
-            glNormal3f(cosbeta * cosalphai, cosbeta * sinalphai, sinbita);
-            glVertex3f(x1, y1, z1);
-            float x2 = (rayonTore + rayonTube * cosbeta) * cosalphaj;
-            float y2 = (rayonTore + rayonTube * cosbeta) * sinalphaj;
-            float z2 = rayonTube * sinbita;
-            glNormal3f(cosbeta * cosalphaj, cosbeta * sinalphaj, sinbita);
-            glVertex3f(x2, y2, z2);
-        }
-        glEnd();
-    }
-}
+
+
+
 
 void virage_bas(double x1, double y1, double z1, double x2, double y2, double z2)
 {
@@ -149,14 +116,14 @@ void virage_board_interieur(double x1, double y1, double z1, double x2, double y
     glNormal3f(x1, y1, -z1);
     glVertex3f(x1, y1, z1);
 
-    glNormal3f(x2, y1, -z2);
+    glNormal3f(x1, y1, -z2);
     glVertex3f(x2, y1, z2);
 
 
     glNormal3f(x1, y2, -z1);
     glVertex3f(x1, y2, z1);
 
-    glNormal3f(x2, y2, -z2);
+    glNormal3f(x1, y2, -z2);
     glVertex3f(x2, y2, z2);
 }
 
@@ -178,13 +145,13 @@ void virage_board_exterieur(double x1, double y1, double z1, double x2, double y
 
 
 
-void Virage(double size, double rayonTore, double angleI, double angleF, int nbCube) {
-    int largeur = 20;
-    int hauteur_board = 3;
+void Virage(double largeur ,double rayonTore, double angleI, double angleF, int nbCube) {
+    
 
     glBegin(GL_QUAD_STRIP);
 
     for (int i = 0; i < nbCube; i++) {
+        
         float da = angleF - angleI;
 
         float alphai = angleI + da * i / nbCube;
@@ -195,20 +162,44 @@ void Virage(double size, double rayonTore, double angleI, double angleF, int nbC
         float cosalphaj = cos(alphaj);
         float sinalphaj = sin(alphaj);
 
-        float x1b = -rayonTore * cosalphai;
-        float y1b = 0;
-        float z1b = rayonTore * sinalphai;
+        
+        float x1b, y1b, z1b;
+        float x2b, y2b, z2b;
 
-        float x2b = -(rayonTore+largeur) * cosalphaj;
-        float y2b = 0;
-        float z2b = (rayonTore + largeur) * sinalphaj;
+        if (i == nbCube - 1)
+        {
+            x1b = 0.0;
+            y1b = 0.0;
+            z1b = -rayonTore * cosalphai;
+        }
+        else
+        {
+            x1b = -rayonTore * sinalphai;
+            y1b = 0.0;
+            z1b = -rayonTore * cosalphai;
+        }
 
+
+        if (i == 0)
+        {
+            x2b = 0.0;
+            y2b = 0.0;
+            z2b = -(rayonTore + largeur) * cosalphaj;
+        }
+        else
+        {
+            x2b = -(rayonTore + largeur) * sinalphaj;
+            y2b = 0.0;
+            z2b = -(rayonTore + largeur) * cosalphaj;
+        }
+        
         virage_bas(x1b, y1b, z1b, x2b, y2b, z2b);
 
     }
+    glEnd();
 
     
-
+    glBegin(GL_QUAD_STRIP);
     for (int i = 0; i < nbCube; i++) {
         float da = angleF - angleI;
 
@@ -221,18 +212,30 @@ void Virage(double size, double rayonTore, double angleI, double angleF, int nbC
         float sinalphaj = sin(alphaj);
 
 
-        float x1i = -rayonTore * cosalphai;
+        float x1i = -rayonTore * sinalphai;
         float y1i = 0;
-        float z1i = rayonTore * sinalphai;
+        float z1i = -rayonTore * cosalphai;
 
-        float x2i = -rayonTore * cosalphaj;
-        float y2i = hauteur_board;
-        float z2i = rayonTore * sinalphaj;
+        float x2i = -rayonTore * sinalphaj;
+        float y2i = hauteur_bord;
+        float z2i = -rayonTore * cosalphaj;
+
+        if (i < 10 )
+        {
+            printf("X1 = %f ", x1i);
+            printf("Y1 = %f ", y1i);
+            printf("Z1 = %f ", z1i);
+
+            printf("X2 = %f ", x2i);
+            printf("Y2 = %f ", y2i);
+            printf("Z2 = %f \n", z2i);
+        }
         virage_board_interieur(x1i, y1i, z1i, x2i, y2i, z2i);
 
     }
+    glEnd();
 
-    
+    glBegin(GL_QUAD_STRIP);
     for (int i = 0; i < nbCube; i++) {
         float da = angleF - angleI;
 
@@ -244,28 +247,22 @@ void Virage(double size, double rayonTore, double angleI, double angleF, int nbC
         float cosalphaj = cos(alphaj);
         float sinalphaj = sin(alphaj);
 
-        float x1e = -(rayonTore + largeur) * cosalphai;
+        float x1e = -(rayonTore + largeur) * sinalphai;
         float y1e = 0;
-        float z1e = (rayonTore + largeur) * sinalphai;
+        float z1e = -(rayonTore + largeur) * cosalphai;
 
-        float x2e = -(rayonTore + largeur) * cosalphaj;
-        float y2e = hauteur_board;
-        float z2e = (rayonTore + largeur) * sinalphaj;
+        float x2e = -(rayonTore + largeur) * sinalphaj;
+        float y2e = hauteur_bord;
+        float z2e = -(rayonTore + largeur) * cosalphaj;
         virage_board_exterieur(x1e, y1e, z1e, x2e, y2e, z2e);
 
     }
-    
-
-
-
     glEnd();
     
+    
 }
 
 
-void solidTore(double rayonTube, double rayonTore, int nbFTube, int nbFTore) {
-    solidTore(rayonTube, rayonTore, 0.0, 2 * M_PI, nbFTube, nbFTore);
-}
 
 void Sphere(float x, float y, float z)
 {
@@ -275,14 +272,17 @@ void Sphere(float x, float y, float z)
     glPopMatrix();
 }
 
-static void scene1(double x ,double y , double z) {
+static void etage2(double x ,double y , double z) {
+
+    double rayonTore = 20;
+    double largeur = 20;
+
     glPushMatrix();
     glTranslatef(x, y, z);
+
     // Axe du tunnel
     glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
 
-    glPushMatrix();
-    glTranslatef(0.0, 0.0, 0.0);
     /*
     //Plan
     glPushMatrix();
@@ -308,25 +308,74 @@ static void scene1(double x ,double y , double z) {
     glPopMatrix();
     glPopMatrix();
     */
+    glPushMatrix();
+    //Bord interieur 1 
+    double p1[] = { 0.0, 0.0, -rayonTore };
+    double p2[] = { 80.0, 0.0, -rayonTore };
+    double p3[] = { 80.0, hauteur_bord, -rayonTore };
+    double p4[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(p1,p2,p3,p4);
+
+
+    //Bord exterieur 1
+    double p5[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double p6[] = { 80.0, 0.0, -(rayonTore + largeur) };
+    double p7[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
+    double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    Circuit_droit(p5, p6, p7, p8);
+
+
+    //La Base 1
+    double p21[] = { 0.0, 0.0, -rayonTore };
+    double p22[] = { 80.0, 0.0, -rayonTore };
+    double p23[] = { 80.0, 0.0, -(rayonTore + largeur) };
+    double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    Circuit_droit(p21, p22, p23, p24);
+
+    //Fin1
+    double pf1[] = { 80.0, 0.0, -rayonTore };
+    double pf2[] = { 80.0, 0.0, -(rayonTore+largeur) };
+    double pf3[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
+    double pf4[] = { 80.0, hauteur_bord, -rayonTore };
+    Circuit_droit(pf1, pf2, pf3, pf4);
+
+
+    //Bord interieur 2 
+    double p11[] = { 0.0, 0.0, rayonTore };
+    double p12[] = { 80.0, 0.0, rayonTore };
+    double p13[] = { 80.0, hauteur_bord, rayonTore };
+    double p14[] = { 0.0, hauteur_bord, rayonTore };
+    Circuit_droit(p11, p12, p13, p14);
+
+
+    //Bord exterieur 2
+    double p15[] = { 0.0, 0.0, (rayonTore + largeur) };
+    double p16[] = { 80.0, 0.0, (rayonTore + largeur) };
+    double p17[] = { 80.0, hauteur_bord, (rayonTore + largeur) };
+    double p18[] = { 0.0, hauteur_bord, (rayonTore + largeur) };
+    Circuit_droit(p15, p16, p17, p18);
+
+    //La Base 2
+    double p25[] = { 0.0, 0.0, rayonTore };
+    double p26[] = { 80.0, 0.0, rayonTore };
+    double p27[] = { 80.0, 0, rayonTore + largeur };
+    double p28[] = { 0.0, 0, rayonTore + largeur };
+    Circuit_droit(p25, p26, p27, p28);
+    glPopMatrix();
+
+    //Fin 2
+    double pf5[] = { 80.0, 0.0, rayonTore };
+    double pf6[] = { 80.0, 0.0, rayonTore + largeur };
+    double pf7[] = { 80.0, hauteur_bord, rayonTore + largeur };
+    double pf8[] = { 80.0, hauteur_bord, rayonTore };
+    Circuit_droit(pf5, pf6, pf7, pf8);
 
     //Virage
 
     glPushMatrix();
-    //glTranslatef(-5.0F, 0.0F, 5.0F);
-
-    glPushMatrix();
-    //glScalef(80.0, 1, 4.0);
-    //glutSolidCube(1.0);
-    //solidTore(0.05F, 5.0F, 0, M_PI, 18, 100);
-    Virage(1.0, 20.0, 0, M_PI, 100);
+    Virage(largeur,rayonTore, 0, M_PI, 30);
     glPopMatrix();
 
-    glPopMatrix();
-
-
-
-
-    glPopMatrix();
 
 
     
@@ -334,38 +383,6 @@ static void scene1(double x ,double y , double z) {
     glPopMatrix();
 }
 
-static void scene2(void) {
-    glPushMatrix();
-    // Axe du tunnel
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
-    glPushMatrix();
-    glTranslatef(8.0F, 0.0F, 0.0F);
-    glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-    solidTore(0.05, 8.0, 18, 180);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-8.0F, 0.0F, 0.0F);
-    glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-    solidTore(0.05, 8.0, 18, 180);
-    glPopMatrix();
-    // Tunnel
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
-    for (int i = 0; i <= 36; i++) {
-        glPushMatrix();
-        glTranslatef(8.0F, 0.0F, 0.0F);
-        glRotatef(i * 180.0F / 18, 0.0F, 1.0F, 0.0F);
-        glTranslatef(8.0F, 0.0F, 0.0F);
-        solidTore(0.1, 2.0, 18, 72);
-        glPopMatrix();
-        glPushMatrix();
-        glTranslatef(-8.0F, 0.0F, 0.0F);
-        glRotatef(i * 180.0F / 18, 0.0F, 1.0F, 0.0F);
-        glTranslatef(-8.0F, 0.0F, 0.0F);
-        solidTore(0.1, 2.0, 18, 72);
-        glPopMatrix();
-    }
-    glPopMatrix();
-}
 
 /* Fonction executee lors d'un rafraichissement */
 /* de la fenetre de dessin                      */
@@ -381,15 +398,12 @@ static void display(void) {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
     glPushMatrix();
-    gluLookAt(5.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
     glRotatef(ry, 0.0F, 1.0F, 0.0F);
     glRotatef(rx, 1.0F, 0.0F, 0.0F);
     if (obj) {
-        scene1(0.0,0.0,0.0);
-    }
-    else {
-        scene2();
+        etage2(0.0,0.0,0.0);
     }
     glPopMatrix();
     glFlush();
@@ -425,7 +439,7 @@ static void reshape(int x, int y) {
     glViewport(0, 0, x, y);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(70.0F, (float)x / y, 1.0, 40.0);
+    gluPerspective(100.0F, (float)x / y, 1.0, 1000.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }

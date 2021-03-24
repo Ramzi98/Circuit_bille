@@ -1,4 +1,16 @@
 ﻿cl : ligne de commande warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   Circuit.cpp
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(315,27): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(316,26): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(323,27): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(324,26): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(338,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(339,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(346,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(347,27): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(354,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(355,27): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(369,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(370,28): warning C4838: la conversion de 'int' en 'double' requiert une conversion restrictive
   Exemple.vcxproj -> C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).
