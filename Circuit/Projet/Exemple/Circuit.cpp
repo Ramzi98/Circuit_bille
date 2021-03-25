@@ -16,9 +16,11 @@
 /* pour les angles et les couleurs utilises     */
 
 
-double hauteur_bord = 3;
+double hauteur_bord = 7;
 double largeur = 20;
 double rayonTore = 20;
+double rayonBall = 3;
+int etage = 3;
 
 
 
@@ -30,13 +32,16 @@ static float dx = 0.0F;
 static float dy = 0.0F;
 static float dz = 0.0F;
 
+static float xball = -(rayonTore + largeur + 20) + rayonBall;
+static float yball = 40.0 + rayonBall;
+static float zball = -(rayonTore + largeur / 2);
+
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
 static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
 static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
-static int obj = 1;
 
 /* Affichage des informations relatives         */
 /* a OpenGL                                     */
@@ -80,24 +85,71 @@ float distance = 0.0F;
 
 
 
-void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
+void Circuit_droit(double p1[], double p2[], double p3[], double p4[] , char a)
 {
-    glBegin(GL_QUADS);
+    //printf("X = %f , Y = %f , Z = %f \n", p1[0], p1[1], p1[2]);
 
-    glNormal3f(p1[0], p1[1], p1[2]);
-    glVertex3f(p1[0], p1[1], p1[2]);
+    if (a == 'i')
+    {
+        glBegin(GL_QUADS);
 
-    glNormal3f(p2[0], p2[1], p2[2]);
-    glVertex3f(p2[0], p2[1], p2[2]);
+        glNormal3f(p1[0], p1[1], p1[2]-1);
+        glVertex3f(p1[0], p1[1], p1[2]);
 
-    glNormal3f(p3[0], p3[1], p3[2]);
-    glVertex3f(p3[0], p3[1], p3[2]);
+        glNormal3f(p2[0], p2[1], p2[2]-1);
+        glVertex3f(p2[0], p2[1], p2[2]);
 
-    glNormal3f(p4[0], p4[1], p4[2]);
-    glVertex3f(p4[0], p4[1], p4[2]);
+        glNormal3f(p3[0], p3[1], p3[2]-1);
+        glVertex3f(p3[0], p3[1], p3[2]);
 
-    
-    glEnd();
+        glNormal3f(p4[0], p4[1], p4[2]-1);
+        glVertex3f(p4[0], p4[1], p4[2]);
+
+
+        glEnd();
+    }
+    else
+    {
+        if (a == 'e')
+        {
+            glBegin(GL_QUADS);
+
+            glNormal3f(p1[0], p1[1], p1[2] + 1);
+            glVertex3f(p1[0], p1[1], p1[2]);
+
+            glNormal3f(p2[0], p2[1], p2[2] + 1);
+            glVertex3f(p2[0], p2[1], p2[2]);
+
+            glNormal3f(p3[0], p3[1], p3[2] + 1);
+            glVertex3f(p3[0], p3[1], p3[2]);
+
+            glNormal3f(p4[0], p4[1], p4[2] + 1);
+            glVertex3f(p4[0], p4[1], p4[2]);
+
+
+            glEnd();
+        }
+        else
+        {
+            glBegin(GL_QUADS);
+
+            glNormal3f(p1[0], p1[1] + 1, p1[2]);
+            glVertex3f(p1[0], p1[1], p1[2]);
+
+            glNormal3f(p2[0], p2[1] + 1, p2[2]);
+            glVertex3f(p2[0], p2[1], p2[2]);
+
+            glNormal3f(p3[0], p3[1] + 1, p3[2]);
+            glVertex3f(p3[0], p3[1], p3[2]);
+
+            glNormal3f(p4[0], p4[1] + 1, p4[2]);
+            glVertex3f(p4[0], p4[1], p4[2]);
+
+
+            glEnd();
+        }
+    }
+   
 }
 
 
@@ -112,7 +164,7 @@ void etage1_3(double x, double y, double z)
     double p2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double p3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
     double p4[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(p1, p2, p3, p4);
+    Circuit_droit(p1, p2, p3, p4,'i');
 
 
     //Bord exterieur 1
@@ -120,28 +172,28 @@ void etage1_3(double x, double y, double z)
     double p6[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p7[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
-    Circuit_droit(p5, p6, p7, p8);
+    Circuit_droit(p5, p6, p7, p8,'e');
 
     //La Base 1
     double p21[] = { 0.0, 0.0, -rayonTore };
     double p22[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double p23[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
-    Circuit_droit(p21, p22, p23, p24);
+    Circuit_droit(p21, p22, p23, p24,'b');
 
     //Fin1
     double pf1[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double pf2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double pf3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
     double pf4[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4);
+    Circuit_droit(pf1, pf2, pf3, pf4,'f1');
 
     //Fin1
     double pf5[] = { 0.0, 0.0, -rayonTore };
     double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
     double pf7[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
     double pf8[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(pf5, pf6, pf7, pf8);
+    Circuit_droit(pf5, pf6, pf7, pf8, 'f2');
 
     glPopMatrix();
 }
@@ -239,7 +291,7 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
         {
             x2b = 0.0;
             y2b = 0.0;
-            z2b = -(rayonTore + largeur) * cosalphaj;
+            z2b = -(rayonTore + largeur);
         }
         else
         {
@@ -274,7 +326,7 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
         float x2i = -rayonTore * sinalphaj;
         float y2i = hauteur_bord;
         float z2i = -rayonTore * cosalphaj;
-
+        /*
         if (i < 10 )
         {
             printf("X1 = %f ", x1i);
@@ -285,6 +337,7 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
             printf("Y2 = %f ", y2i);
             printf("Z2 = %f \n", z2i);
         }
+        */
         virage_board_interieur(x1i, y1i, z1i, x2i, y2i, z2i);
 
     }
@@ -322,8 +375,9 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
 void Sphere(float x, float y, float z)
 {
     glPushMatrix();
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
     glTranslatef(x, y, z);
-    glutSolidSphere(1.2, 36, 36);
+    glutSolidSphere(rayonBall, 36, 36);
     glPopMatrix();
 }
 
@@ -332,8 +386,7 @@ static void etage2(double x ,double y , double z) {
     glPushMatrix();
     glTranslatef(x, y, z);
 
-    // Axe du tunnel
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, vert);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
     
     glPushMatrix();
     //Bord interieur 1 
@@ -341,7 +394,7 @@ static void etage2(double x ,double y , double z) {
     double p2[] = { 80.0, 0.0, -rayonTore };
     double p3[] = { 80.0, hauteur_bord, -rayonTore };
     double p4[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(p1,p2,p3,p4);
+    Circuit_droit(p1,p2,p3,p4,'i');
 
 
     //Bord exterieur 1
@@ -349,7 +402,7 @@ static void etage2(double x ,double y , double z) {
     double p6[] = { 80.0, 0.0, -(rayonTore + largeur) };
     double p7[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
-    Circuit_droit(p5, p6, p7, p8);
+    Circuit_droit(p5, p6, p7, p8,'e');
 
 
     //La Base 1
@@ -357,14 +410,14 @@ static void etage2(double x ,double y , double z) {
     double p22[] = { 80.0, 0.0, -rayonTore };
     double p23[] = { 80.0, 0.0, -(rayonTore + largeur) };
     double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
-    Circuit_droit(p21, p22, p23, p24);
+    Circuit_droit(p21, p22, p23, p24,'b');
 
     //Fin1
     double pf1[] = { 80.0, 0.0, -rayonTore };
     double pf2[] = { 80.0, 0.0, -(rayonTore+largeur) };
     double pf3[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double pf4[] = { 80.0, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4);
+    Circuit_droit(pf1, pf2, pf3, pf4,'e');
 
 
     //Bord interieur 2 
@@ -372,7 +425,7 @@ static void etage2(double x ,double y , double z) {
     double p12[] = { 80.0, 0.0, rayonTore };
     double p13[] = { 80.0, hauteur_bord, rayonTore };
     double p14[] = { 0.0, hauteur_bord, rayonTore };
-    Circuit_droit(p11, p12, p13, p14);
+    Circuit_droit(p11, p12, p13, p14,'i');
 
 
     //Bord exterieur 2
@@ -380,22 +433,24 @@ static void etage2(double x ,double y , double z) {
     double p16[] = { 80.0, 0.0, (rayonTore + largeur) };
     double p17[] = { 80.0, hauteur_bord, (rayonTore + largeur) };
     double p18[] = { 0.0, hauteur_bord, (rayonTore + largeur) };
-    Circuit_droit(p15, p16, p17, p18);
+    Circuit_droit(p15, p16, p17, p18, 'e');
 
     //La Base 2
     double p25[] = { 0.0, 0.0, rayonTore };
     double p26[] = { 80.0, 0.0, rayonTore };
     double p27[] = { 80.0, 0, rayonTore + largeur };
     double p28[] = { 0.0, 0, rayonTore + largeur };
-    Circuit_droit(p25, p26, p27, p28);
-    glPopMatrix();
+    Circuit_droit(p25, p26, p27, p28, 'b');
+   
 
     //Fin 2
     double pf5[] = { 80.0, 0.0, rayonTore };
     double pf6[] = { 80.0, 0.0, rayonTore + largeur };
     double pf7[] = { 80.0, hauteur_bord, rayonTore + largeur };
     double pf8[] = { 80.0, hauteur_bord, rayonTore };
-    Circuit_droit(pf5, pf6, pf7, pf8);
+    Circuit_droit(pf5, pf6, pf7, pf8, 'f2');
+
+    glPopMatrix();
 
     //Virage
 
@@ -430,14 +485,16 @@ static void display(void) {
     glRotatef(ry, 0.0F, 1.0F, 0.0F);
     glRotatef(rx, 1.0F, 0.0F, 0.0F);
 
-
     glTranslatef(dx, dy, dz);
 
-    if (obj) {
         etage2(0.0,0.0,0.0);
+
+        
         etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
         etage1_3(-(rayonTore + largeur + 20 + largeur), -40.0, rayonTore + 2*largeur);
-    }
+
+        Sphere(xball,yball,zball);
+
     glPopMatrix();
     glFlush();
     glutSwapBuffers();
@@ -451,17 +508,19 @@ static void display(void) {
 
 static void idle(void) {
     printf("I\n");
-    /*
-    if (x1 == 10 && 21 < 10)
+
+    if (xball < 80.0-rayonBall && etage == 3)
     {
-        z1++;
-        //printf("X = %f", X);
-        //printf("Z = %f", Z);
+        xball += 1.0F / 50.0;
+        /*
+        if (xball == (80.0 - rayonBall + (1.0F / 50.0)))
+        {
+            etage = 2;
+        }
+        */
     }
 
-    */
-
-
+    printf("etage : %d\n", etage);
     glutPostRedisplay();
 }
 
@@ -541,11 +600,6 @@ static void keyboard(unsigned char key, int x, int y) {
     case ' ':
     { informationsOpenGL(); }
     break;
-    case 'o':
-    case 'O':
-        obj = !obj;
-        glutPostRedisplay();
-        break;
     case 0x1B:
         exit(0);
         break;
@@ -592,6 +646,7 @@ int main(int argc, char** argv) {
     init();
     glutKeyboardFunc(keyboard);
     glutReshapeFunc(reshape);
+    glutIdleFunc(idle);
     glutSpecialFunc(special);
     glutDisplayFunc(display);
     glutMainLoop();
