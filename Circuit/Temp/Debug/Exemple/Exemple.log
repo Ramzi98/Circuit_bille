@@ -1,7 +1,7 @@
 ﻿cl : ligne de commande warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   Circuit.cpp
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(189,38): warning C4309: 'argument' : troncation de valeur de constante
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(196,39): warning C4309: 'argument' : troncation de valeur de constante
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(451,39): warning C4309: 'argument' : troncation de valeur de constante
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(185,38): warning C4309: 'argument' : troncation de valeur de constante
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(192,39): warning C4309: 'argument' : troncation de valeur de constante
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(463,39): warning C4309: 'argument' : troncation de valeur de constante
   Exemple.vcxproj -> C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).
