@@ -15,6 +15,21 @@
 /* Variables et constantes globales             */
 /* pour les angles et les couleurs utilises     */
 
+struct coord_3D {
+    GLfloat x = 0.0F;
+    GLfloat y = 0.0F;
+    GLfloat z = 0.0F;
+    GLfloat w = 1.0F;
+};
+
+struct polygone {
+    int n = 0;
+    coord_3D* p = NULL;
+};
+
+typedef struct coord_3D coord_3D;
+typedef struct polygone polygone;
+
 
 double hauteur_bord = 7;
 double largeur = 20;
@@ -44,15 +59,93 @@ static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
 
-/* Affichage des informations relatives         */
-/* a OpenGL                                     */
 
-static void informationsOpenGL(void) {
-    printf("GL_VENDOR     = %s\n", (const char*)glGetString(GL_VENDOR));
-    printf("GL_VERSION    = %s\n", (const char*)glGetString(GL_VERSION));
-    printf("GL_RENDERER   = %s\n", (const char*)glGetString(GL_RENDERER));
-    printf("GL_EXTENSIONS = %s\n", (const char*)glGetString(GL_EXTENSIONS));
+
+static GLfloat pts[6][4] = {
+  { 80.0F,40.0F,-(rayonTore + largeur / 2), 1.0F },
+  { 100.0F,40.0F,-(rayonTore + largeur), 1.0F },
+  { 120.0F,40.0F,-(rayonTore + 2 * largeur), 1.0F },
+  { 80.0F,0.0F,-(rayonTore + largeur/2), 1.0F }
+};
+
+
+static GLfloat pts2[6][4] = {
+  { 120.0F,40.0F,-(rayonTore + 2 * largeur), 1.0F },
+  { 160.0F,40.0F,-(rayonTore + largeur), 1.0F },
+  { 120.0F,40.0F,-(rayonTore + largeur / 2), 1.0F }
+};
+
+static GLfloat pts3[6][4] = {
+  { 120.0F,40.0F,-(rayonTore + largeur / 2), 1.0F },
+  { 80.0F,0.0F,-(rayonTore + largeur / 2), 1.0F },
+};
+
+static polygone pl;
+static int aff = 3;
+
+void bas_relie_1(float x, float y, float z) {
+    glVertex3f(x, y, (z-largeur/2));
+    glVertex3f(x, y, (z + largeur / 2));
 }
+
+void interieur_relie_1(float x, float y, float z) {
+    glVertex3f(x, y, (z + largeur / 2));
+    glVertex3f(x, y + hauteur_bord, (z + largeur / 2));
+}
+
+void exterieur_relie_1(float x, float y, float z) {
+    glVertex3f(x, y, (z - largeur / 2));
+    glVertex3f(x, y + hauteur_bord, (z - largeur / 2));
+}
+
+void bezier(polygone* p, int n, int d) {
+    int i, j;
+    float t, mt;
+    float* cn, x,y,z,fac;
+    cn = (float*)calloc(p->n, sizeof(float));
+    cn[0] = 1;
+    cn[1] = (float)(p->n - 1);
+    for (i = 2; i < p->n; i++)
+        cn[i] = cn[i - 1] * (p->n - i) / i;
+    for (i = 0; i < n; i++) {
+        t = (float)i / (n - 1);
+        mt = 1 - t;
+        x = y = z = 0.0F;
+        for (j = 0; j < p->n; j++) {
+            fac = cn[j] * (float)pow(t, j) *
+                (float)pow(mt, p->n - 1 - j);
+            x += fac * p->p[j].x;
+            y += fac * p->p[j].y;
+            z += fac * p->p[j].z;
+        }
+        if (d == 1)
+        {
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
+            bas_relie_1(x, y, z);
+        }
+
+        if (d == 2)
+        {
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+
+            interieur_relie_1(x, y, z);
+        }
+
+        if (d == 3)
+        {
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+
+            exterieur_relie_1(x, y, z);
+        }
+        
+        
+        
+    }
+    free(cn);
+}
+
+
+
 
 /* Fonction d'initialisation des parametres     */
 /* OpenGL ne changeant pas au cours de la vie   */
@@ -134,13 +227,8 @@ void etage1_3(double x, double y, double z)
     Circuit_droit(p5, p6, p7, p8);
 
 
-    //Fin1
-    double pf1[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
-    double pf2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
-    double pf3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
-    double pf4[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4);
-
+  
+     
     //Fin1
     double pf5[] = { 0.0, 0.0, -rayonTore };
     double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
@@ -446,6 +534,19 @@ static void etage2(double x ,double y , double z) {
     glPopMatrix();
 }
 
+void relie_etage_3_2(double x, double y, double z)
+{
+    glPushMatrix();
+
+
+    glPopMatrix();
+}
+
+
+
+
+
+
 
 /* Fonction executee lors d'un rafraichissement */
 /* de la fenetre de dessin                      */
@@ -460,6 +561,10 @@ static void display(void) {
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+
+   
+
+
     glPushMatrix();
     if (camera == false)
     {
@@ -484,7 +589,49 @@ static void display(void) {
 
         Sphere(xball,yball,zball);
 
+
+        pl.n = aff;
+        pl.p = (coord_3D*)&pts[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40,1);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 2);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 3);
+        glEnd();
+
+       
+        pl.p = (coord_3D*)&pts2[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40,1);
+        glEnd();
+     
+
+        pl.n = 2;
+        pl.p = (coord_3D*)&pts3[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40,1);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 2);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 3);
+        glEnd();
+
+        
+
+      
+
     glPopMatrix();
+
+
+
+   
+
+
     glFlush();
     glutSwapBuffers();
     int error = glGetError();
@@ -586,13 +733,9 @@ static void keyboard(unsigned char key, int x, int y) {
     anim = !anim;
     glutIdleFunc((anim) ? idle : NULL); }
     break;
-    case ' ':
-    { informationsOpenGL(); }
-    break;
     case 0x1B:
         exit(0);
         break;
-
     case 'z':
         dy -= 1.0;
         glutPostRedisplay();
@@ -633,9 +776,9 @@ static void keyboard(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
-    glutInitWindowSize(480, 320);
+    glutInitWindowSize(1200, 840);
     glutInitWindowPosition(50, 50);
-    glutCreateWindow("Un circuit matérialisé par des anneaux");
+    glutCreateWindow("Un circuit à bille");
     init();
     glutKeyboardFunc(keyboard);
     glutReshapeFunc(reshape);
