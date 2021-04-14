@@ -72,6 +72,12 @@
     <ClCompile Include="..\..\..\..\..\..\Desktop\virtual_trackball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DeuxFenetres.cpp">
+      <Filter>Source Files\TPS</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMemoire.cpp">
+      <Filter>Source Files\TPS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CH3D.h">

@@ -60,7 +60,7 @@ static void informationsOpenGL(void) {
 
 static void init(void) {
     const GLfloat shininess[] = { 50.0 };
-    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, rouge);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, jaune);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, bleu);
@@ -86,12 +86,11 @@ float distance = 0.0F;
 
 
 
-void Circuit_droit(double p1[], double p2[], double p3[], double p4[] , char a)
+
+void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 {
     //printf("X = %f , Y = %f , Z = %f \n", p1[0], p1[1], p1[2]);
 
-    if (a == 'i')
-    {
         glBegin(GL_QUADS);
 
         glNormal3f(p1[0], p1[1], p1[2]);
@@ -108,48 +107,6 @@ void Circuit_droit(double p1[], double p2[], double p3[], double p4[] , char a)
 
 
         glEnd();
-    }
-    else
-    {
-        if (a == 'e')
-        {
-            glBegin(GL_QUADS);
-
-            glNormal3f(p1[0], p1[1], p1[2]);
-            glVertex3f(p1[0], p1[1], p1[2]);
-
-            glNormal3f(p2[0], p2[1], p2[2]);
-            glVertex3f(p2[0], p2[1], p2[2]);
-
-            glNormal3f(p3[0], p3[1], p3[2]);
-            glVertex3f(p3[0], p3[1], p3[2]);
-
-            glNormal3f(p4[0], p4[1], p4[2]);
-            glVertex3f(p4[0], p4[1], p4[2]);
-
-
-            glEnd();
-        }
-        else
-        {
-            glBegin(GL_QUADS);
-
-            glNormal3f(p1[0], p1[1], p1[2]);
-            glVertex3f(p1[0], p1[1], p1[2]);
-
-            glNormal3f(p2[0], p2[1], p2[2]);
-            glVertex3f(p2[0], p2[1], p2[2]);
-
-            glNormal3f(p3[0], p3[1], p3[2]);
-            glVertex3f(p3[0], p3[1], p3[2]);
-
-            glNormal3f(p4[0], p4[1], p4[2]);
-            glVertex3f(p4[0], p4[1], p4[2]);
-
-
-            glEnd();
-        }
-    }
    
 }
 
@@ -166,7 +123,7 @@ void etage1_3(double x, double y, double z)
     double p2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double p3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
     double p4[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(p1, p2, p3, p4,'i');
+    Circuit_droit(p1, p2, p3, p4);
 
 
     //Bord exterieur 1
@@ -174,7 +131,7 @@ void etage1_3(double x, double y, double z)
     double p6[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p7[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
-    Circuit_droit(p5, p6, p7, p8,'e');
+    Circuit_droit(p5, p6, p7, p8);
 
 
     //Fin1
@@ -182,14 +139,14 @@ void etage1_3(double x, double y, double z)
     double pf2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double pf3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
     double pf4[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4,'f1');
+    Circuit_droit(pf1, pf2, pf3, pf4);
 
     //Fin1
     double pf5[] = { 0.0, 0.0, -rayonTore };
     double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
     double pf7[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
     double pf8[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(pf5, pf6, pf7, pf8, 'f2');
+    Circuit_droit(pf5, pf6, pf7, pf8);
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
 
@@ -198,7 +155,7 @@ void etage1_3(double x, double y, double z)
     double p22[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double p23[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
-    Circuit_droit(p21, p22, p23, p24, 'b');
+    Circuit_droit(p21, p22, p23, p24);
 
     
 
@@ -408,7 +365,7 @@ static void etage2(double x ,double y , double z) {
     double p2[] = { 80.0, 0.0, -rayonTore };
     double p3[] = { 80.0, hauteur_bord, -rayonTore };
     double p4[] = { 0.0, hauteur_bord, -rayonTore };
-    Circuit_droit(p1,p2,p3,p4,'i');
+    Circuit_droit(p1,p2,p3,p4);
 
 
     //Bord exterieur 1
@@ -416,7 +373,7 @@ static void etage2(double x ,double y , double z) {
     double p6[] = { 80.0, 0.0, -(rayonTore + largeur) };
     double p7[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
-    Circuit_droit(p5, p6, p7, p8,'e');
+    Circuit_droit(p5, p6, p7, p8);
 
    
 
@@ -425,7 +382,7 @@ static void etage2(double x ,double y , double z) {
     double pf2[] = { 80.0, 0.0, -(rayonTore+largeur) };
     double pf3[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double pf4[] = { 80.0, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4,'e');
+    Circuit_droit(pf1, pf2, pf3, pf4);
 
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
@@ -435,7 +392,7 @@ static void etage2(double x ,double y , double z) {
     double p22[] = { 80.0, 0.0, -rayonTore };
     double p23[] = { 80.0, 0.0, -(rayonTore + largeur) };
     double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
-    Circuit_droit(p21, p22, p23, p24, 'b');
+    Circuit_droit(p21, p22, p23, p24);
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
 
@@ -444,7 +401,7 @@ static void etage2(double x ,double y , double z) {
     double p12[] = { 80.0, 0.0, rayonTore };
     double p13[] = { 80.0, hauteur_bord, rayonTore };
     double p14[] = { 0.0, hauteur_bord, rayonTore };
-    Circuit_droit(p11, p12, p13, p14,'i');
+    Circuit_droit(p11, p12, p13, p14);
 
 
     //Bord exterieur 2
@@ -452,7 +409,7 @@ static void etage2(double x ,double y , double z) {
     double p16[] = { 80.0, 0.0, (rayonTore + largeur) };
     double p17[] = { 80.0, hauteur_bord, (rayonTore + largeur) };
     double p18[] = { 0.0, hauteur_bord, (rayonTore + largeur) };
-    Circuit_droit(p15, p16, p17, p18, 'e');
+    Circuit_droit(p15, p16, p17, p18);
 
 
     //Fin 2
@@ -460,7 +417,7 @@ static void etage2(double x ,double y , double z) {
     double pf6[] = { 80.0, 0.0, rayonTore + largeur };
     double pf7[] = { 80.0, hauteur_bord, rayonTore + largeur };
     double pf8[] = { 80.0, hauteur_bord, rayonTore };
-    Circuit_droit(pf5, pf6, pf7, pf8, 'f2');
+    Circuit_droit(pf5, pf6, pf7, pf8);
 
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
@@ -470,7 +427,7 @@ static void etage2(double x ,double y , double z) {
     double p26[] = { 80.0, 0.0, rayonTore };
     double p27[] = { 80.0, 0, rayonTore + largeur };
     double p28[] = { 0.0, 0, rayonTore + largeur };
-    Circuit_droit(p25, p26, p27, p28, 'b');
+    Circuit_droit(p25, p26, p27, p28);
    
 
   
