@@ -1,2 +1,4 @@
 C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
 C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.pdb
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Temp\Debug\Exemple\Exemple.exe
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Temp\Debug\Exemple\Exemple.pdb

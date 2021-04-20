@@ -12,6 +12,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "PNG/ChargePngFile.h"
+
 /* Variables et constantes globales             */
 /* pour les angles et les couleurs utilises     */
 
@@ -37,6 +39,9 @@ double rayonTore = 20;
 double rayonBall = 3;
 int etage = 3;
 bool camera = false;
+static int texture = 1;
+static unsigned int textureID = 0;
+static unsigned char* img1;
 
 
 
@@ -165,6 +170,8 @@ static void init(void) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
     glEnable(GL_AUTO_NORMAL);
+    initTexture();
+   
 }
 
 /* Scene dessinee                               */
@@ -552,6 +559,9 @@ void relie_etage_3_2(double x, double y, double z)
 /* de la fenetre de dessin                      */
 
 static void display(void) {
+
+
+
     printf("D\n");
     glClearColor(0.5F, 0.5F, 0.5F, 0.5F);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -566,6 +576,11 @@ static void display(void) {
 
 
     glPushMatrix();
+
+    if (texture)
+        glEnable(GL_TEXTURE_2D);
+    else
+        glDisable(GL_TEXTURE_2D);
     if (camera == false)
     {
         gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
@@ -641,6 +656,12 @@ static void display(void) {
 
 /* Fonction executee lorsqu'aucun evenement     */
 /* n'est en file d'attente                      */
+
+static void clean(void) {
+    if (textureID != 0)
+        glDeleteTextures(1, &textureID);
+}
+
 
 static void idle(void) {
     printf("I\n");
@@ -764,6 +785,10 @@ static void keyboard(unsigned char key, int x, int y) {
         camera = !camera;
         glutPostRedisplay();
         break;
+    case 0x20:
+        texture = (texture + 1) % 2;
+        glutPostRedisplay();
+        break;
     }
     
         
@@ -771,9 +796,116 @@ static void keyboard(unsigned char key, int x, int y) {
     
 }
 
+
+
+
+//texture
+/* Fonction d'initialisation des parametres     */
+/* OpenGL ne changeant pas au cours de la vie   */
+/* du programme                                 */
+
+static unsigned char* image(int nc, int nl) {
+    unsigned char* img = (unsigned char*)calloc(3 * nc * nl, sizeof(unsigned char));
+    if (!img)
+        return NULL;
+    unsigned char* p = img;
+    for (int l = 0; l < nl; l++)
+        for (int c = 0; c < nc; c++) {
+            if (l % 2 == 0) {
+                if (c % 2 == 0) {
+                    p[0] = 0x00;
+                    p[1] = 0x00;
+                    p[2] = 0x00;
+                }
+                else {
+                    p[0] = 0xFF;
+                    p[1] = 0x00;
+                    p[2] = 0x00;
+                }
+            }
+            else {
+                if (c % 2 == 0) {
+                    p[0] = 0x00;
+                    p[1] = 0xFF;
+                    p[2] = 0x00;
+                }
+                else {
+                    p[0] = 0x00;
+                    p[1] = 0x00;
+                    p[2] = 0xFF;
+                }
+            }
+            p += 3;
+        }
+    return img;
+}
+
+
+static void initTexture(void) {
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    { int rx = 16;
+    int ry = 16;
+    unsigned char* img = image(rx, ry);
+    if (img) {
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+        free(img);
+        printf("Texture chargee %d\n", textureID);
+    }
+    else {
+        glDeleteTextures(1, &textureID);
+        textureID = 0;
+        printf("Texture non chargee\n");
+    }
+
+
+    char* nomFichier = "Test.png/Emoji4.png";
+    img1 = chargeImagePng(nomFichier, &rx, &ry);
+    if (img1) {
+        printf("Resolution en x : %8d\n", rx);
+        printf("Resolution en y : %8d\n", ry);
+        printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
+        free(img1);
+    }
+    else {
+        printf("Adresse         : %p\n", img1);
+    }
+
+
+
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
+    // free(img1   );
+    printf("Texture chargee %d\n", textureID); }
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+}
+
 /* Fonction principale                          */
 
 int main(int argc, char** argv) {
+
+    char* nomFichier = "Test.png/Emoji4.png";
+    int rx;
+    int ry;
+    printf("%s\n", nomFichier);
+    img1 = chargeImagePng(nomFichier, &rx, &ry);
+    if (img1) {
+        printf("Resolution en x : %8d\n", rx);
+        printf("Resolution en y : %8d\n", ry);
+        printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
+        free(img1);
+    }
+    else {
+        printf("Adresse         : %p\n", img1);
+    }
+    printf("\n");
+
+
+
+    atexit(clean);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(1200, 840);
