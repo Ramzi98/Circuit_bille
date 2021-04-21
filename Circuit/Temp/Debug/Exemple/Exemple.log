@@ -1,3 +1,14 @@
-﻿PlacageTexture.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/SAFESEH'
-PlacageTexture.obj : error LNK2019: symbole externe non résolu "unsigned char * __cdecl chargeImagePng(char *,int *,int *)" (?chargeImagePng@@YAPAEPADPAH1@Z) référencé dans la fonction "void __cdecl initTexture(void)" (?initTexture@@YAXXZ)
-..\..\Temp\Debug\Exemple\Exemple.exe : fatal error LNK1120: 1 externes non résolus
+﻿cl : ligne de commande warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
+  Circuit.cpp
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(70,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(71,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(72,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(73,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(78,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(79,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(80,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(84,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Projet\Exemple\Circuit.cpp(85,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+Circuit.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/SAFESEH'
+  Exemple.vcxproj -> C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Temp\Debug\Exemple\Exemple.exe
+          1 fichier(s) copié(s).

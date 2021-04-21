@@ -170,8 +170,8 @@ static void init(void) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
     glEnable(GL_AUTO_NORMAL);
-    initTexture();
-   
+   // initTexture();
+    
 }
 
 /* Scene dessinee                               */
@@ -847,7 +847,7 @@ static void initTexture(void) {
     glBindTexture(GL_TEXTURE_2D, textureID);
     { int rx = 16;
     int ry = 16;
-    unsigned char* img = image(rx, ry);
+    /*unsigned char* img = image(rx, ry);
     if (img) {
         glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
         free(img);
@@ -857,7 +857,7 @@ static void initTexture(void) {
         glDeleteTextures(1, &textureID);
         textureID = 0;
         printf("Texture non chargee\n");
-    }
+    }*/
 
 
     char* nomFichier = "Test.png/Emoji4.png";
@@ -874,7 +874,7 @@ static void initTexture(void) {
 
 
 
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
+    glTexImage2D(GL_TEXTURE_2D, 0 , 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
     // free(img1   );
     printf("Texture chargee %d\n", textureID); }
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -886,26 +886,6 @@ static void initTexture(void) {
 /* Fonction principale                          */
 
 int main(int argc, char** argv) {
-
-    char* nomFichier = "Test.png/Emoji4.png";
-    int rx;
-    int ry;
-    printf("%s\n", nomFichier);
-    img1 = chargeImagePng(nomFichier, &rx, &ry);
-    if (img1) {
-        printf("Resolution en x : %8d\n", rx);
-        printf("Resolution en y : %8d\n", ry);
-        printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
-        free(img1);
-    }
-    else {
-        printf("Adresse         : %p\n", img1);
-    }
-    printf("\n");
-
-
-
-    atexit(clean);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(1200, 840);
