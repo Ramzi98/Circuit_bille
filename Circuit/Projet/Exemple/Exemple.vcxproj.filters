@@ -78,6 +78,9 @@
     <ClCompile Include="TestMemoire.cpp">
       <Filter>Source Files\TPS</Filter>
     </ClCompile>
+    <ClCompile Include="KeyboardController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CH3D.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Rt3D.h">
       <Filter>Source Files\TPS\TP8</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardController.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
