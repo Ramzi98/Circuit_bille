@@ -1,2 +1,5 @@
 .vs/
 /Circuit/Src/test.cpp
+/Circuit/Lib
+/Circuit/Include
+/Circuit/Temp
