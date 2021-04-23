@@ -58,6 +58,9 @@ static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
 static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
+//Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
+static int affS = 1;
+
 
 
 
@@ -436,7 +439,12 @@ void Sphere(float x, float y, float z)
     glPushMatrix();
     glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
     glTranslatef(x, y, z);
-    glutSolidSphere(rayonBall, 36, 36);
+    if (affS) {
+        glutSolidSphere(rayonBall, 36, 36);
+    }else {
+        glutWireSphere(rayonBall, 36, 36);
+    }
+    
     glPopMatrix();
 }
 
@@ -553,47 +561,46 @@ void relie_etage_3_2(double x, double y, double z)
 
 static void display(void) {
     printf("D\n");
-    glClearColor(0.5F, 0.5F, 0.5F, 0.5F);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    const GLfloat light0_position[] = { 0.0,0.0,0.0,1.0 };
-    const GLfloat light1_position[] = { -1.0,1.0,1.0,0.0 };
-    const GLfloat light2_position[] = { 1.0,-1.0,1.0,0.0 };
-    glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-    glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-    glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+        glShadeModel(GL_FLAT);
+        glClearColor(0.5F, 0.5F, 0.5F, 0.5F);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        const GLfloat light0_position[] = { 0.0,0.0,0.0,1.0 };
+        const GLfloat light1_position[] = { -1.0,1.0,1.0,0.0 };
+        const GLfloat light2_position[] = { 1.0,-1.0,1.0,0.0 };
+        glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+        glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+        glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
 
-   
 
 
-    glPushMatrix();
-    if (camera == false)
-    {
-        gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
-    }
-    else
-    {
-        gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
-    }
-    
-    glRotatef(rz, 0.0F, 0.0F, 1.0F);
-    glRotatef(ry, 0.0F, 1.0F, 0.0F);
-    glRotatef(rx, 1.0F, 0.0F, 0.0F);
 
-    glTranslatef(dx, dy, dz);
+        glPushMatrix();
+        if (camera == false)
+        {
+            gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
+        }
+        else
+        {
+            gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+        }
 
-        etage2(0.0,0.0,0.0);
+        glRotatef(rz, 0.0F, 0.0F, 1.0F);
+        glRotatef(ry, 0.0F, 1.0F, 0.0F);
+        glRotatef(rx, 1.0F, 0.0F, 0.0F);
 
-        
+        glTranslatef(dx, dy, dz);
+
+        etage2(0.0, 0.0, 0.0);
         etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
-        etage1_3(-(rayonTore + largeur + 20 + largeur), -40.0, rayonTore + 2*largeur);
-
-        Sphere(xball,yball,zball);
+        etage1_3(-(rayonTore + largeur + 20 + largeur), -40.0, rayonTore + 2 * largeur);
+        
+        Sphere(xball, yball, zball);
 
 
         pl.n = aff;
         pl.p = (coord_3D*)&pts[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 40, 1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -602,17 +609,17 @@ static void display(void) {
         bezier(&pl, 40, 3);
         glEnd();
 
-       
+
         pl.p = (coord_3D*)&pts2[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 40, 1);
         glEnd();
-     
+
 
         pl.n = 2;
         pl.p = (coord_3D*)&pts3[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 40, 1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -620,23 +627,20 @@ static void display(void) {
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 3);
         glEnd();
-
-        
-
-      
-
-    glPopMatrix();
+        glPopMatrix();
 
 
 
-   
 
 
-    glFlush();
-    glutSwapBuffers();
-    int error = glGetError();
-    if (error != GL_NO_ERROR)
-        printf("Attention erreur %d\n", error);
+
+        glFlush();
+        glutSwapBuffers();
+        int error = glGetError();
+        if (error != GL_NO_ERROR)
+            printf("Attention erreur %d\n", error);
+
+    
 }
 
 /* Fonction executee lorsqu'aucun evenement     */
@@ -762,6 +766,10 @@ static void keyboard(unsigned char key, int x, int y) {
         break;
     case 'c':
         camera = !camera;
+        glutPostRedisplay();
+        break;
+    case 32: //Permet de switcher en mode fils de fer avec la touche "espace"
+        affS = 1 - affS;
         glutPostRedisplay();
         break;
     }
