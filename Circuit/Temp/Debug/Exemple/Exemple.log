@@ -1,20 +1,20 @@
 ﻿cl : ligne de commande warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   Circuit.cpp
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(70,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(71,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(72,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(78,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(79,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(80,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(84,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(85,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(90,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(91,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(92,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(97,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(98,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(99,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(103,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(104,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(74,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(75,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(76,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(81,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(82,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(83,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(87,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(88,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(93,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(94,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(95,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(100,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(101,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(102,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(106,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(107,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
   Exemple.vcxproj -> C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).

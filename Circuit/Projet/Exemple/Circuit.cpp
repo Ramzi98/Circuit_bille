@@ -1,8 +1,3 @@
-/* Une animation en OpenGL                      */
-/*                                              */
-/* Auteur: Nicolas JANEY                        */
-/* nicolas.janey@univ-fcomte.fr                 */
-/* Mars 2021                                    */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -63,6 +58,15 @@ static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
 static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
+coord_3D cord1[100000];
+coord_3D cord2[100000];
+int k = 0;
+int k1 = 0;
+int k2 = 0;
+int k3 = 0;
+int cmpt1 = 0;
+int cmpt2 = 0;
+
 
 
 
@@ -70,7 +74,6 @@ static GLfloat pts[6][4] = {
   { 80.0F,40.0F,-(rayonTore + largeur / 2), 1.0F },
   { 100.0F,40.0F,-(rayonTore + largeur), 1.0F },
   { 120.0F,40.0F,-(rayonTore + 2 * largeur), 1.0F },
-  //{ 80.0F,0.0F,-(rayonTore + largeur/2), 1.0F }
 };
 
 
@@ -111,6 +114,17 @@ static int aff = 3;
 void bas_relie(float x, float y, float z) {
     glVertex3f(x, y, (z-largeur/2));
     glVertex3f(x, y, (z + largeur / 2));
+    if (cmpt1 <= 20)
+    {
+        
+
+        cord1[k].x = x;
+        cord1[k].y = y;
+        cord1[k].z = z;
+        k++;
+    }
+   
+          
 }
 
 void interieur_relie(float x, float y, float z) {
@@ -166,6 +180,7 @@ void bezier(polygone* p, int n, int d) {
         
         
     }
+    cmpt1++;
     free(cn);
 }
 
@@ -295,6 +310,14 @@ void virage_bas(double x1, double y1, double z1, double x2, double y2, double z2
 
     glNormal3f(x2, y2, -z2);
     glVertex3f(x2, y2, z2);
+
+    if (cmpt2 == 0)
+    {
+        cord2[k2].x = (x1+x2)/2;
+        cord2[k2].y = y1;
+        cord2[k2].z = (z1+z2)/2;
+        k2++;
+    }
 }
 
 void virage_board_interieur(double x1, double y1, double z1, double x2, double y2, double z2)
@@ -452,6 +475,7 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
 
     }
     glEnd();
+    cmpt2++;
     
     
 }
@@ -491,13 +515,14 @@ static void etage2(double x ,double y , double z) {
     Circuit_droit(p5, p6, p7, p8);
 
    
-
+    /*
     //Fin1
     double pf1[] = { 80.0, 0.0, -rayonTore };
     double pf2[] = { 80.0, 0.0, -(rayonTore+largeur) };
     double pf3[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double pf4[] = { 80.0, hauteur_bord, -rayonTore };
     Circuit_droit(pf1, pf2, pf3, pf4);
+    */
 
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
@@ -526,13 +551,14 @@ static void etage2(double x ,double y , double z) {
     double p18[] = { 0.0, hauteur_bord, (rayonTore + largeur) };
     Circuit_droit(p15, p16, p17, p18);
 
-
+    /*
     //Fin 2
     double pf5[] = { 80.0, 0.0, rayonTore };
     double pf6[] = { 80.0, 0.0, rayonTore + largeur };
     double pf7[] = { 80.0, hauteur_bord, rayonTore + largeur };
     double pf8[] = { 80.0, hauteur_bord, rayonTore };
     Circuit_droit(pf5, pf6, pf7, pf8);
+    */
 
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
@@ -551,7 +577,7 @@ static void etage2(double x ,double y , double z) {
     //Virage
 
     glPushMatrix();
-    Virage(largeur,rayonTore, 0, M_PI, 30);
+    Virage(largeur,rayonTore, 0, M_PI, 800);
     glPopMatrix();
 
 
@@ -607,7 +633,27 @@ static void display(void) {
     }
     else
     {
-        gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+            
+        if (yball < 40.0)
+        {
+            if (yball == rayonBall && zball > 2)
+            {
+                gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+            }
+            else
+            {
+                gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+            }
+           
+        }
+        else
+        {
+
+             gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+           
+        }
+        
+        
     }
     
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
@@ -628,7 +674,7 @@ static void display(void) {
         pl.n = aff;
         pl.p = (coord_3D*)&pts[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 500,1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -640,14 +686,14 @@ static void display(void) {
        
         pl.p = (coord_3D*)&pts2[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 500,1);
         glEnd();
      
 
         pl.n = 2;
         pl.p = (coord_3D*)&pts3[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40,1);
+        bezier(&pl, 200,1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -664,7 +710,7 @@ static void display(void) {
         pl.n = aff;
         pl.p = (coord_3D*)&pts4[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40, 1);
+        bezier(&pl, 500, 1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -676,13 +722,13 @@ static void display(void) {
 
         pl.p = (coord_3D*)&pts5[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40, 1);
+        bezier(&pl, 500, 1);
         glEnd();
 
         pl.n = 2;
         pl.p = (coord_3D*)&pts6[0][0];
         glBegin(GL_QUAD_STRIP);
-        bezier(&pl, 40, 1);
+        bezier(&pl, 200, 1);
         glEnd();
         glBegin(GL_QUAD_STRIP);
         bezier(&pl, 40, 2);
@@ -696,8 +742,6 @@ static void display(void) {
     glPopMatrix();
 
  
-
-   
 
 
     glFlush();
@@ -716,19 +760,123 @@ static void clean(void) {
 }
 
 
+/* Fonction executee lors d'un rafraichissement */
+/* de la fenetre de dessin                      */
+/*
+static void gestionAnimationSphere(void) {
+  
+        glPushMatrix();
+        int n = distance / (longueur / 2.0F);
+        float p = distance - n * (longueur / 2.0F);
+        float angle = 360.0F * p / (longueur / 2.0F);
+        if (n == 0) {
+            glTranslatef(8.0F, 0.0F, 0.0F);
+            glRotatef(angle, 0.0F, 1.0F, 0.0F);
+            glTranslatef(-8.0F, 0.0F, 0.0F);
+        }
+        else {
+            glTranslatef(-8.0F, 0.0F, 0.0F);
+            glRotatef(-angle, 0.0F, 1.0F, 0.0F);
+            glTranslatef(8.0F, 0.0F, 0.0F);
+        }
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
+        glutSolidSphere(1.2, 36, 36);
+        glPopMatrix();
+}
+*/
+
 static void idle(void) {
     printf("I\n");
 
-    if (xball < 80.0-rayonBall && etage == 3)
+    if (xball <= 80.0 && etage == 3)
     {
-        xball += 1.0F / 50.0;
-        /*
-        if (xball == (80.0 - rayonBall + (1.0F / 50.0)))
+        xball += 1.0F/10.0;
+        
+    }
+    else
+    {
+        if (xball >= 80.0 - rayonBall && etage == 3)
+        {
+            etage = 4;
+        }
+    }
+
+    if (etage == 4 && yball != rayonBall)
+    {
+        xball = cord1[k1].x;
+        yball = cord1[k1].y+rayonBall;
+        zball = cord1[k1].z;
+        k1++;
+    }
+    else
+    {
+        if (etage == 4 && yball == rayonBall)
         {
             etage = 2;
         }
-        */
     }
+
+    if (etage == 2 && xball >= 0 && zball == -(rayonTore+largeur/2))
+    {
+        xball -= 1.0F / 10.0;
+    }
+    else
+    {
+        if (etage == 2 && xball <= 0 && cord2[k3].z != 0)
+        {
+            xball = cord2[k3].x;
+            yball = cord2[k3].y+rayonBall;
+            zball = cord2[k3].z;
+            k3++;
+        }
+        else
+        {
+            if (etage == 2 && xball <= 80.0)
+            {
+                xball += 1.0F / 10.0;
+            }
+            else
+            {
+                if (xball >= 80.0 && etage == 2)
+                {
+                    etage = 5;
+                }
+            }
+            
+        }
+
+        
+    }
+
+    if (etage == 5 && yball != -40 + rayonBall)
+    {
+        xball = cord1[k1].x;
+        yball = cord1[k1].y + rayonBall;
+        zball = cord1[k1].z;
+        k1++;
+    }
+    else
+    {
+        if (etage == 5 && yball == -40 + rayonBall)
+        {
+            etage = 1;
+        }
+    }
+
+    if (etage == 1 && xball >= -(rayonTore + largeur + 20) + rayonBall && zball == rayonTore + largeur / 2)
+    {
+        xball -= 1.0F / 10.0;
+    }
+
+
+
+
+   
+
+    printf("X : %f\n",xball);
+    printf("Y : %f\n", yball);
+    printf("Z : %f\n", zball);
+
 
     printf("etage : %d\n", etage);
     glutPostRedisplay();
