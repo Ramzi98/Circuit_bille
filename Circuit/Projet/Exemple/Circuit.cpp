@@ -70,7 +70,7 @@ static GLfloat pts[6][4] = {
   { 80.0F,40.0F,-(rayonTore + largeur / 2), 1.0F },
   { 100.0F,40.0F,-(rayonTore + largeur), 1.0F },
   { 120.0F,40.0F,-(rayonTore + 2 * largeur), 1.0F },
-  { 80.0F,0.0F,-(rayonTore + largeur/2), 1.0F }
+  //{ 80.0F,0.0F,-(rayonTore + largeur/2), 1.0F }
 };
 
 
@@ -85,20 +85,40 @@ static GLfloat pts3[6][4] = {
   { 80.0F,0.0F,-(rayonTore + largeur / 2), 1.0F },
 };
 
+
+static GLfloat pts4[6][4] = {
+  { 80.0F,0.0F,(rayonTore + largeur / 2), 1.0F },
+  { 100.0F,0.0F,(rayonTore + largeur), 1.0F },
+  { 120.0F,0.0F,(rayonTore + 2 * largeur), 1.0F },
+};
+
+
+static GLfloat pts5[6][4] = {
+  { 120.0F,0.0F,(rayonTore + 2 * largeur), 1.0F },
+  { 160.0F,0.0F,(rayonTore + largeur), 1.0F },
+  { 120.0F,0.0F,(rayonTore + largeur / 2), 1.0F }
+};
+
+static GLfloat pts6[6][4] = {
+  { 120.0F,0.0F,(rayonTore + largeur / 2), 1.0F },
+  { 80.0F,-40.0F,(rayonTore + largeur / 2), 1.0F },
+};
+
+
 static polygone pl;
 static int aff = 3;
 
-void bas_relie_1(float x, float y, float z) {
+void bas_relie(float x, float y, float z) {
     glVertex3f(x, y, (z-largeur/2));
     glVertex3f(x, y, (z + largeur / 2));
 }
 
-void interieur_relie_1(float x, float y, float z) {
+void interieur_relie(float x, float y, float z) {
     glVertex3f(x, y, (z + largeur / 2));
     glVertex3f(x, y + hauteur_bord, (z + largeur / 2));
 }
 
-void exterieur_relie_1(float x, float y, float z) {
+void exterieur_relie(float x, float y, float z) {
     glVertex3f(x, y, (z - largeur / 2));
     glVertex3f(x, y + hauteur_bord, (z - largeur / 2));
 }
@@ -126,21 +146,21 @@ void bezier(polygone* p, int n, int d) {
         if (d == 1)
         {
             glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
-            bas_relie_1(x, y, z);
+            bas_relie(x, y, z);
         }
 
         if (d == 2)
         {
             glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
 
-            interieur_relie_1(x, y, z);
+            interieur_relie(x, y, z);
         }
 
         if (d == 3)
         {
             glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
 
-            exterieur_relie_1(x, y, z);
+            exterieur_relie(x, y, z);
         }
         
         
@@ -600,11 +620,11 @@ static void display(void) {
 
         
         etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
-        etage1_3(-(rayonTore + largeur + 20 + largeur), -40.0, rayonTore + 2*largeur);
+        etage1_3(-(rayonTore + largeur + 20), -40.0, rayonTore + 2*largeur);
 
         Sphere(xball,yball,zball);
 
-
+        // Relie 3_2
         pl.n = aff;
         pl.p = (coord_3D*)&pts[0][0];
         glBegin(GL_QUAD_STRIP);
@@ -636,13 +656,46 @@ static void display(void) {
         bezier(&pl, 40, 3);
         glEnd();
 
+        //////////////////////////////////////////////////////////
+
+
+         // Relie 2_1
+
+        pl.n = aff;
+        pl.p = (coord_3D*)&pts4[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 1);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 2);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 3);
+        glEnd();
         
 
+        pl.p = (coord_3D*)&pts5[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 1);
+        glEnd();
+
+        pl.n = 2;
+        pl.p = (coord_3D*)&pts6[0][0];
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 1);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 2);
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        bezier(&pl, 40, 3);
+        glEnd();
+        
       
 
     glPopMatrix();
 
-
+ 
 
    
 
