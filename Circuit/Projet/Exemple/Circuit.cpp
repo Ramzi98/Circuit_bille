@@ -577,7 +577,8 @@ static void display(void) {
         glPushMatrix();
         if (camera == false)
         {
-            gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
+            //placer la caméra au dessus du circuit
+            gluLookAt(50.0, 120.0, -90.0, 50.0, 0.0, 0.0, 0.0, -40.0, 90.0);
         }
         else
         {
