@@ -33,7 +33,7 @@ double largeur = 20;
 double rayonTore = 20;
 double rayonBall = 3;
 int etage = 3;
-bool camera = false;
+int camera = 0;
 static int texture = 1;
 static unsigned int textureID = 0;
 static unsigned char* img1;
@@ -47,7 +47,7 @@ static float rz = 0.0F;
 static float dx = 0.0F;
 static float dy = 0.0F;
 static float dz = 0.0F;
-
+//Position initiale de la balle
 static float xball = -(rayonTore + largeur + 20) + rayonBall;
 static float yball = 40.0 + rayonBall;
 static float zball = -(rayonTore + largeur / 2);
@@ -637,14 +637,14 @@ static void display(void) {
         glEnable(GL_TEXTURE_2D);
     else
         glDisable(GL_TEXTURE_2D);
-    if (camera == false)
+    if (camera == 0)
     {
         //placer la caméra au dessus du circuit
         gluLookAt(50.0, 120.0, -90.0, 50.0, 0.0, 0.0, 0.0, -40.0, 90.0);
     }
-    else
+    if (camera == 1)
     {
-        if (yball < 40.0)
+        if (yball < 40.0)//Balle dans 2 et 1 étage
         {
             if (yball == rayonBall && zball > 2)
             {
@@ -655,10 +655,31 @@ static void display(void) {
                 gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
             }   
         }
-        else
+        else //3 étage
         {
             gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);   
         }    
+    }
+    if (camera == 2)
+    {
+        if (yball < 40.0)//Balle dans 2 et 1 étage
+        {
+            if (yball == rayonBall && zball > 2)
+            {
+                //gluLookAt(xball, yball, zball, xball+10, yball, zball, 0.0, 10.0, 0.0);
+                //gluLookAt(xball - rayonBall, yball, zball, xball - rayonBall - 3, yball, zball, 0.0, 10.0, 0.0);
+                gluLookAt(xball + rayonBall, yball, zball, xball + rayonBall + 3, yball, zball, 0.0, 10.0, 0.0);
+            }
+            else
+            {
+                //gluLookAt(xball, yball , zball, xball+20, yball, zball, 0.0, 10.0, 0.0);
+                gluLookAt(xball - rayonBall, yball, zball, xball - rayonBall - 3, yball, zball, 0.0, 10.0, 0.0);
+            }
+        }
+        else //3 étage
+        {
+            gluLookAt(xball + rayonBall, yball , zball, xball + rayonBall+3, yball, zball, 0.0, 10.0, 0.0);
+        }
     }
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
     glRotatef(ry, 0.0F, 1.0F, 0.0F);
@@ -987,7 +1008,13 @@ static void keyboard(unsigned char key, int x, int y) {
         glutPostRedisplay();
         break;
     case 'c':
-        camera = !camera;
+        if (camera == 2) {
+            camera = 0;
+        }
+        else {
+            camera = camera + 1;
+        }
+        
         glutPostRedisplay();
         break;
     case 0x20:
