@@ -67,6 +67,9 @@ int k3 = 0;
 int cmpt1 = 0;
 int cmpt2 = 0;
 
+//Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
+static int affS = 1;
+
 
 
 
@@ -487,7 +490,12 @@ void Sphere(float x, float y, float z)
     glPushMatrix();
     glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
     glTranslatef(x, y, z);
-    glutSolidSphere(rayonBall, 36, 36);
+    if (affS) {
+        glutSolidSphere(rayonBall, 36, 36);
+    }
+    else {
+        glutWireSphere(rayonBall, 36, 36);
+    }
     glPopMatrix();
 }
 
@@ -618,6 +626,8 @@ static void display(void) {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
 
+    glPolygonMode(GL_FRONT_AND_BACK, (affS % 2) ? GL_FILL : GL_LINE);// Transformation fil de fer
+
    
 
 
@@ -629,11 +639,11 @@ static void display(void) {
         glDisable(GL_TEXTURE_2D);
     if (camera == false)
     {
-        gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, -20.0);
+        //placer la caméra au dessus du circuit
+        gluLookAt(50.0, 120.0, -90.0, 50.0, 0.0, 0.0, 0.0, -40.0, 90.0);
     }
     else
     {
-            
         if (yball < 40.0)
         {
             if (yball == rayonBall && zball > 2)
@@ -643,19 +653,13 @@ static void display(void) {
             else
             {
                 gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
-            }
-           
+            }   
         }
         else
         {
-
-             gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
-           
-        }
-        
-        
+            gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);   
+        }    
     }
-    
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
     glRotatef(ry, 0.0F, 1.0F, 0.0F);
     glRotatef(rx, 1.0F, 0.0F, 0.0F);
@@ -988,6 +992,10 @@ static void keyboard(unsigned char key, int x, int y) {
         break;
     case 0x20:
         texture = (texture + 1) % 2;
+        glutPostRedisplay();
+        break;
+    case 'v': //Permet de switcher en mode fils de fer avec la touche "espace"
+        affS = 1 - affS;
         glutPostRedisplay();
         break;
     }
