@@ -248,8 +248,8 @@ static void initTexture(void) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
-    { int rx = 16;
-    int ry = 16;
+    { int rx = 512;
+    int ry = 256;
   
 
 
