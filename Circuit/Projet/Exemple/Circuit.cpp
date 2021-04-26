@@ -6,6 +6,10 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#define WIDTH 640
+#define HEIGHT 480 
+int nFullScreen = 1;
+
 
 #include "PNG/ChargePngFile.h"
 
@@ -190,9 +194,88 @@ void bezier(polygone* p, int n, int d) {
 
 
 
+
+//texture
 /* Fonction d'initialisation des parametres     */
 /* OpenGL ne changeant pas au cours de la vie   */
 /* du programme                                 */
+
+static unsigned char* image(int nc, int nl) {
+    unsigned char* img = (unsigned char*)calloc(3 * nc * nl, sizeof(unsigned char));
+    if (!img)
+        return NULL;
+    unsigned char* p = img;
+    for (int l = 0; l < nl; l++)
+        for (int c = 0; c < nc; c++) {
+            if (l % 2 == 0) {
+                if (c % 2 == 0) {
+                    p[0] = 0x00;
+                    p[1] = 0x00;
+                    p[2] = 0x00;
+                }
+                else {
+                    p[0] = 0xFF;
+                    p[1] = 0x00;
+                    p[2] = 0x00;
+                }
+            }
+            else {
+                if (c % 2 == 0) {
+                    p[0] = 0x00;
+                    p[1] = 0xFF;
+                    p[2] = 0x00;
+                }
+                else {
+                    p[0] = 0x00;
+                    p[1] = 0x00;
+                    p[2] = 0xFF;
+                }
+            }
+            p += 3;
+        }
+    return img;
+}
+
+
+/* Fonction d'initialisation des parametres     */
+/* OpenGL ne changeant pas au cours de la vie   */
+/* du programme                                 */
+
+
+
+
+static void initTexture(void) {
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    { int rx = 16;
+    int ry = 16;
+  
+
+
+    char* nomFichier = "Test.png/Emoji4.png";
+    img1 = chargeImagePng(nomFichier, &rx, &ry);
+    if (img1) {
+        printf("Resolution en x : %8d\n", rx);
+        printf("Resolution en y : %8d\n", ry);
+        printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
+        free(img1);
+    }
+    else {
+        printf("Adresse         : %p\n", img1);
+    }
+
+
+
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
+     //free(img1   );
+    printf("Texture chargee %d\n", textureID); }
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+}
+
 
 static void init(void) {
     const GLfloat shininess[] = { 50.0 };
@@ -208,7 +291,7 @@ static void init(void) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
     glEnable(GL_AUTO_NORMAL);
-   // initTexture();
+    initTexture();
     
 }
 
@@ -810,13 +893,12 @@ static void gestionAnimationSphere(void) {
 }
 */
 
-static void idle(void) {
-    printf("I\n");
+static void ball(void) {
 
     if (xball <= 80.0 && etage == 3)
     {
-        xball += 1.0F/10.0;
-        
+        xball += 1.0F / 10.0;
+
     }
     else
     {
@@ -829,7 +911,7 @@ static void idle(void) {
     if (etage == 4 && yball != rayonBall)
     {
         xball = cord1[k1].x;
-        yball = cord1[k1].y+rayonBall;
+        yball = cord1[k1].y + rayonBall;
         zball = cord1[k1].z;
         k1++;
     }
@@ -841,7 +923,7 @@ static void idle(void) {
         }
     }
 
-    if (etage == 2 && xball >= 0 && zball == -(rayonTore+largeur/2))
+    if (etage == 2 && xball >= 0 && zball == -(rayonTore + largeur / 2))
     {
         xball -= 1.0F / 10.0;
     }
@@ -850,7 +932,7 @@ static void idle(void) {
         if (etage == 2 && xball <= 0 && cord2[k3].z != 0)
         {
             xball = cord2[k3].x;
-            yball = cord2[k3].y+rayonBall;
+            yball = cord2[k3].y + rayonBall;
             zball = cord2[k3].z;
             k3++;
         }
@@ -867,10 +949,10 @@ static void idle(void) {
                     etage = 5;
                 }
             }
-            
+
         }
 
-        
+
     }
 
     if (etage == 5 && yball != -40 + rayonBall)
@@ -896,14 +978,120 @@ static void idle(void) {
 
 
 
-   
 
-    printf("X : %f\n",xball);
+
+    printf("X : %f\n", xball);
     printf("Y : %f\n", yball);
     printf("Z : %f\n", zball);
 
 
     printf("etage : %d\n", etage);
+}
+
+
+static void balldroite(void) {
+
+
+
+    if (xball <= 80.0 && etage == 3)
+    {
+        xball -= 1.0F / 10.0;
+
+    }
+    else
+    {
+        if (xball >= 80.0 - rayonBall && etage == 3)
+        {
+            etage = 4;
+        }
+    }
+
+    if (etage == 4 && yball != rayonBall)
+    {
+        xball = cord1[k1].x;
+        yball = cord1[k1].y + rayonBall;
+        zball = cord1[k1].z;
+        k1++;
+    }
+    else
+    {
+        if (etage == 4 && yball == rayonBall)
+        {
+            etage = 2;
+        }
+    }
+
+    if (etage == 2 && xball >= 0 && zball == -(rayonTore + largeur / 2))
+    {
+        xball += 1.2F / 10.0;
+    }
+    else
+    {
+        if (etage == 2 && xball <= 0 && cord2[k3].z != 0)
+        {
+            xball = cord2[k3].x;
+            yball = cord2[k3].y + rayonBall;
+            zball = cord2[k3].z;
+            k3++;
+        }
+        else
+        {
+            if (etage == 2 && xball <= 80.0)
+            {
+                xball -= 1.2F / 10.0;
+            }
+            else
+            {
+                if (xball >= 80.0 && etage == 2)
+                {
+                    etage = 5;
+                }
+            }
+
+        }
+
+
+    }
+
+    if (etage == 5 && yball != -40 + rayonBall)
+    {
+        xball = cord1[k1].x;
+        yball = cord1[k1].y + rayonBall;
+        zball = cord1[k1].z;
+        k1++;
+    }
+    else
+    {
+        if (etage == 5 && yball == -40 + rayonBall)
+        {
+            etage = 1;
+        }
+    }
+
+    if (etage == 1 && xball >= -(rayonTore + largeur + 20) + rayonBall && zball == rayonTore + largeur / 2)
+    {
+        xball += 1.2F / 10.0;
+    }
+
+
+
+
+
+
+    printf("X : %f\n", xball);
+    printf("Y : %f\n", yball);
+    printf("Z : %f\n", zball);
+
+
+    printf("etage : %d\n", etage);
+}
+
+
+
+static void idle(void) {
+    printf("I\n");
+    ball();
+    
     glutPostRedisplay();
 }
 
@@ -956,27 +1144,12 @@ static void special(int key, int x, int y) {
 
 static void keyboard(unsigned char key, int x, int y) {
     switch (key) {
-    case 'f':
-    case 'F':
-    { static int fullScreen = 0;
-    static int tx;
-    static int ty;
-    static int px;
-    static int py;
-    fullScreen = !fullScreen;
-    if (fullScreen) {
-        px = glutGet(GLUT_WINDOW_X);
-        py = glutGet(GLUT_WINDOW_Y);
-        tx = glutGet(GLUT_WINDOW_WIDTH);
-        ty = glutGet(GLUT_WINDOW_HEIGHT);
-        glutFullScreen();
-    }
-    else
-        glutPositionWindow(px, py);
-    glutReshapeWindow(tx, ty); }
-    break;
+ 
     case 0x0D:
     { static int anim = 0;
+
+
+
     anim = !anim;
     glutIdleFunc((anim) ? idle : NULL); }
     break;
@@ -1025,6 +1198,34 @@ static void keyboard(unsigned char key, int x, int y) {
         affS = 1 - affS;
         glutPostRedisplay();
         break;
+
+
+    case 'f':
+        if (nFullScreen == 0)
+        {
+            glutFullScreen();
+            nFullScreen = 1;
+            break;
+        }
+        if (nFullScreen == 1)
+        {
+            glutReshapeWindow(WIDTH, HEIGHT);
+            glutPositionWindow(50, 50);
+            nFullScreen = 0;
+            break;
+        }
+        //K
+    case 75:
+        balldroite();
+        break;
+        //m
+    case 77:
+        ball();
+
+        break;
+
+
+
     }
     
         
@@ -1033,91 +1234,6 @@ static void keyboard(unsigned char key, int x, int y) {
 }
 
 
-
-
-//texture
-/* Fonction d'initialisation des parametres     */
-/* OpenGL ne changeant pas au cours de la vie   */
-/* du programme                                 */
-
-static unsigned char* image(int nc, int nl) {
-    unsigned char* img = (unsigned char*)calloc(3 * nc * nl, sizeof(unsigned char));
-    if (!img)
-        return NULL;
-    unsigned char* p = img;
-    for (int l = 0; l < nl; l++)
-        for (int c = 0; c < nc; c++) {
-            if (l % 2 == 0) {
-                if (c % 2 == 0) {
-                    p[0] = 0x00;
-                    p[1] = 0x00;
-                    p[2] = 0x00;
-                }
-                else {
-                    p[0] = 0xFF;
-                    p[1] = 0x00;
-                    p[2] = 0x00;
-                }
-            }
-            else {
-                if (c % 2 == 0) {
-                    p[0] = 0x00;
-                    p[1] = 0xFF;
-                    p[2] = 0x00;
-                }
-                else {
-                    p[0] = 0x00;
-                    p[1] = 0x00;
-                    p[2] = 0xFF;
-                }
-            }
-            p += 3;
-        }
-    return img;
-}
-
-
-static void initTexture(void) {
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    { int rx = 16;
-    int ry = 16;
-    /*unsigned char* img = image(rx, ry);
-    if (img) {
-        glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
-        free(img);
-        printf("Texture chargee %d\n", textureID);
-    }
-    else {
-        glDeleteTextures(1, &textureID);
-        textureID = 0;
-        printf("Texture non chargee\n");
-    }*/
-
-
-    char* nomFichier = "Test.png/Emoji4.png";
-    img1 = chargeImagePng(nomFichier, &rx, &ry);
-    if (img1) {
-        printf("Resolution en x : %8d\n", rx);
-        printf("Resolution en y : %8d\n", ry);
-        printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
-        free(img1);
-    }
-    else {
-        printf("Adresse         : %p\n", img1);
-    }
-
-
-
-    glTexImage2D(GL_TEXTURE_2D, 0 , 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
-    // free(img1   );
-    printf("Texture chargee %d\n", textureID); }
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-}
 
 /* Fonction principale                          */
 
