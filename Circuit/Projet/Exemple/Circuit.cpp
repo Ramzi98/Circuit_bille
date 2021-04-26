@@ -253,13 +253,13 @@ static void initTexture(void) {
   
 
 
-    char* nomFichier = "Test.png/Emoji4.png";
+    char* nomFichier = "Testpng/Emoji4.png";
     img1 = chargeImagePng(nomFichier, &rx, &ry);
     if (img1) {
         printf("Resolution en x : %8d\n", rx);
         printf("Resolution en y : %8d\n", ry);
         printf("Adresse         : %p, %d octets\n", img1, 3 * rx * ry);
-        free(img1);
+       
     }
     else {
         printf("Adresse         : %p\n", img1);
@@ -268,12 +268,13 @@ static void initTexture(void) {
 
 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
-     //free(img1   );
+     free(img1   );
     printf("Texture chargee %d\n", textureID); }
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   // getchar();
 }
 
 
@@ -292,6 +293,7 @@ static void init(void) {
     glEnable(GL_NORMALIZE);
     glEnable(GL_AUTO_NORMAL);
     initTexture();
+    glEnable(GL_TEXTURE_2D);
     
 }
 
@@ -316,16 +318,19 @@ void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 
         glNormal3f(p1[0], p1[1], p1[2]);
         glVertex3f(p1[0], p1[1], p1[2]);
+        glTexCoord2f(0.0F, 0.0F);
 
         glNormal3f(p2[0], p2[1], p2[2]);
         glVertex3f(p2[0], p2[1], p2[2]);
+        glTexCoord2f(0.0F, 1.0F);
 
         glNormal3f(p3[0], p3[1], p3[2]);
         glVertex3f(p3[0], p3[1], p3[2]);
+        glTexCoord2f(1.0F, 1.0F);
 
         glNormal3f(p4[0], p4[1], p4[2]);
         glVertex3f(p4[0], p4[1], p4[2]);
-
+        glTexCoord2f(1.0F, 0.0F);
 
         glEnd();
    
@@ -410,22 +415,27 @@ void virage_board_interieur(double x1, double y1, double z1, double x2, double y
 {
     glNormal3f(x1, y1, -z1);
     glVertex3f(x1, y1, z1);
+    glTexCoord2f(0.0F, 0.0F);
 
     glNormal3f(x1, y1, -z2);
     glVertex3f(x2, y1, z2);
+    glTexCoord2f(1.0F, 0.0F);
 
 
     glNormal3f(x1, y2, -z1);
     glVertex3f(x1, y2, z1);
+    glTexCoord2f(1.0F, 1.0F);
 
     glNormal3f(x1, y2, -z2);
     glVertex3f(x2, y2, z2);
+    glTexCoord2f(0.0F, 1.0F);
 }
 
 void virage_board_exterieur(double x1, double y1, double z1, double x2, double y2, double z2)
 {
     glNormal3f(x1, y1, -z1);
     glVertex3f(x1, y1, z1);
+
 
     glNormal3f(x2, y1, -z2);
     glVertex3f(x2, y1, z2);
@@ -580,6 +590,8 @@ void Sphere(float x, float y, float z)
         glutWireSphere(rayonBall, 36, 36);
     }
     glPopMatrix();
+
+   // glTexCoord2d
 }
 
 static void etage2(double x ,double y , double z) {
