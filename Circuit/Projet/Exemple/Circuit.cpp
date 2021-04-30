@@ -6,12 +6,15 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+
 #define WIDTH 640
 #define HEIGHT 480 
 int nFullScreen = 1;
 
 
 #include "PNG/ChargePngFile.h"
+#include "Balle.h"
+#include "Pos3d.h"
 
 /* Variables et constantes globales             */
 /* pour les angles et les couleurs utilises     */
@@ -52,9 +55,13 @@ static float dx = 0.0F;
 static float dy = 0.0F;
 static float dz = 0.0F;
 //Position initiale de la balle
-static float xball = -(rayonTore + largeur + 20) + rayonBall;
-static float yball = 40.0 + rayonBall;
-static float zball = -(rayonTore + largeur / 2);
+/*static float positionBall.x = -(rayonTore + largeur + 20) + rayonBall;
+static float positionBall.y = 40.0 + rayonBall;
+static float positionBall.z = -(rayonTore + largeur / 2);*/
+Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(rayonTore + largeur / 2));
+//Création balle
+Balle laBalle;
+
 
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
@@ -72,9 +79,9 @@ int cmpt1 = 0;
 int cmpt2 = 0;
 
 //Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
-static int affS = 1;
+//static int affS = 1;
 
-
+float rt = 0;
 
 
 static GLfloat pts[6][4] = {
@@ -578,7 +585,7 @@ void Virage(double largeur ,double rayonTore, double angleI, double angleF, int 
 
 
 
-void Sphere(float x, float y, float z)
+/*void Sphere(float x, float y, float z)
 {
     glPushMatrix();
     glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
@@ -593,7 +600,7 @@ void Sphere(float x, float y, float z)
 
    // glTexCoord2d
 }
-
+*/
 static void etage2(double x ,double y , double z) {
 
     glPushMatrix();
@@ -721,7 +728,7 @@ static void display(void) {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
 
-    glPolygonMode(GL_FRONT_AND_BACK, (affS % 2) ? GL_FILL : GL_LINE);// Transformation fil de fer
+    glPolygonMode(GL_FRONT_AND_BACK, (laBalle.getTypeAffiche()) ? GL_FILL : GL_LINE);// Transformation fil de fer
 
    
 
@@ -739,41 +746,54 @@ static void display(void) {
     }
     if (camera == 1)
     {
-        if (yball < 40.0)//Balle dans 2 et 1 étage
+        if (positionBall.y < 40.0)//Balle dans 2 et 1 étage
         {
-            if (yball == rayonBall && zball > 2)
+            if (positionBall.y == rayonBall && positionBall.z > 2)
             {
-                gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
+                gluLookAt(positionBall.x + 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
             else
             {
-                gluLookAt(xball + 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);
-            }   
+                gluLookAt(positionBall.x + 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+            }
         }
         else //3 étage
         {
-            gluLookAt(xball - 10, yball + 10, zball, xball, yball, zball, 0.0, 10.0, 0.0);   
-        }    
+            if (positionBall.x > 80 && positionBall.x <= 120) {
+                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                rt -= 0.03;
+            }
+            else
+            {
+                if (positionBall.x > 120 && positionBall.x <= 160) {
+                    gluLookAt(positionBall.x - 10 + rt, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                    rt += 0.2;
+                }
+                else {
+                    gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                }
+            }
+        }
     }
     if (camera == 2)
     {
-        if (yball < 40.0)//Balle dans 2 et 1 étage
+        if (positionBall.y < 40.0)//Balle dans 2 et 1 étage
         {
-            if (yball == rayonBall && zball > 2)
+            if (positionBall.y == rayonBall && positionBall.z > 2)
             {
-                //gluLookAt(xball, yball, zball, xball+10, yball, zball, 0.0, 10.0, 0.0);
-                //gluLookAt(xball - rayonBall, yball, zball, xball - rayonBall - 3, yball, zball, 0.0, 10.0, 0.0);
-                gluLookAt(xball + rayonBall, yball, zball, xball + rayonBall + 3, yball, zball, 0.0, 10.0, 0.0);
+                //gluLookAt(positionBall.x, positionBall.y, positionBall.z, positionBall.x+10, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                //gluLookAt(positionBall.x - rayonBall, positionBall.y, positionBall.z, positionBall.x - rayonBall - 3, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                gluLookAt(positionBall.x + rayonBall, positionBall.y, positionBall.z, positionBall.x + rayonBall + 3, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
             else
             {
-                //gluLookAt(xball, yball , zball, xball+20, yball, zball, 0.0, 10.0, 0.0);
-                gluLookAt(xball - rayonBall, yball, zball, xball - rayonBall - 3, yball, zball, 0.0, 10.0, 0.0);
+                //gluLookAt(positionBall.x, positionBall.y , positionBall.z, positionBall.x+20, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                gluLookAt(positionBall.x - rayonBall, positionBall.y, positionBall.z, positionBall.x - rayonBall - 3, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
         }
         else //3 étage
         {
-            gluLookAt(xball + rayonBall, yball , zball, xball + rayonBall+3, yball, zball, 0.0, 10.0, 0.0);
+            gluLookAt(positionBall.x + rayonBall, positionBall.y, positionBall.z, positionBall.x + rayonBall + 3, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
         }
     }
     glRotatef(rz, 0.0F, 0.0F, 1.0F);
@@ -788,7 +808,8 @@ static void display(void) {
         etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
         etage1_3(-(rayonTore + largeur + 20), -40.0, rayonTore + 2*largeur);
 
-        Sphere(xball,yball,zball);
+        //Sphere(xball,yball,zball);
+        laBalle.dessiner(positionBall, rayonBall, 36, 36);
 
         // Relie 3_2
         pl.n = aff;
@@ -907,56 +928,56 @@ static void gestionAnimationSphere(void) {
 
 static void ball(void) {
 
-    if (xball <= 80.0 && etage == 3)
+    if (positionBall.x <= 80.0 && etage == 3)
     {
-        xball += 1.0F / 10.0;
+        positionBall.x += 1.0F / 10.0;
 
     }
     else
     {
-        if (xball >= 80.0 - rayonBall && etage == 3)
+        if (positionBall.x >= 80.0 - rayonBall && etage == 3)
         {
             etage = 4;
         }
     }
 
-    if (etage == 4 && yball != rayonBall)
+    if (etage == 4 && positionBall.y != rayonBall)
     {
-        xball = cord1[k1].x;
-        yball = cord1[k1].y + rayonBall;
-        zball = cord1[k1].z;
+        positionBall.x = cord1[k1].x;
+        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 4 && yball == rayonBall)
+        if (etage == 4 && positionBall.y == rayonBall)
         {
             etage = 2;
         }
     }
 
-    if (etage == 2 && xball >= 0 && zball == -(rayonTore + largeur / 2))
+    if (etage == 2 && positionBall.x >= 0 && positionBall.z == -(rayonTore + largeur / 2))
     {
-        xball -= 1.0F / 10.0;
+        positionBall.x -= 1.0F / 10.0;
     }
     else
     {
-        if (etage == 2 && xball <= 0 && cord2[k3].z != 0)
+        if (etage == 2 && positionBall.x <= 0 && cord2[k3].z != 0)
         {
-            xball = cord2[k3].x;
-            yball = cord2[k3].y + rayonBall;
-            zball = cord2[k3].z;
+            positionBall.x = cord2[k3].x;
+            positionBall.y = cord2[k3].y + rayonBall;
+            positionBall.z = cord2[k3].z;
             k3++;
         }
         else
         {
-            if (etage == 2 && xball <= 80.0)
+            if (etage == 2 && positionBall.x <= 80.0)
             {
-                xball += 1.0F / 10.0;
+                positionBall.x += 1.0F / 10.0;
             }
             else
             {
-                if (xball >= 80.0 && etage == 2)
+                if (positionBall.x >= 80.0 && etage == 2)
                 {
                     etage = 5;
                 }
@@ -967,24 +988,24 @@ static void ball(void) {
 
     }
 
-    if (etage == 5 && yball != -40 + rayonBall)
+    if (etage == 5 && positionBall.y != -40 + rayonBall)
     {
-        xball = cord1[k1].x;
-        yball = cord1[k1].y + rayonBall;
-        zball = cord1[k1].z;
+        positionBall.x = cord1[k1].x;
+        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 5 && yball == -40 + rayonBall)
+        if (etage == 5 && positionBall.y == -40 + rayonBall)
         {
             etage = 1;
         }
     }
 
-    if (etage == 1 && xball >= -(rayonTore + largeur + 20) + rayonBall && zball == rayonTore + largeur / 2)
+    if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
-        xball -= 1.0F / 10.0;
+        positionBall.x -= 1.0F / 10.0;
     }
 
 
@@ -992,9 +1013,9 @@ static void ball(void) {
 
 
 
-    printf("X : %f\n", xball);
-    printf("Y : %f\n", yball);
-    printf("Z : %f\n", zball);
+    printf("X : %f\n", positionBall.x);
+    printf("Y : %f\n", positionBall.y);
+    printf("Z : %f\n", positionBall.z);
 
 
     printf("etage : %d\n", etage);
@@ -1005,56 +1026,56 @@ static void balldroite(void) {
 
 
 
-    if (xball <= 80.0 && etage == 3)
+    if (positionBall.x <= 80.0 && etage == 3)
     {
-        xball -= 1.0F / 10.0;
+        positionBall.x -= 1.0F / 10.0;
 
     }
     else
     {
-        if (xball >= 80.0 - rayonBall && etage == 3)
+        if (positionBall.x >= 80.0 - rayonBall && etage == 3)
         {
             etage = 4;
         }
     }
 
-    if (etage == 4 && yball != rayonBall)
+    if (etage == 4 && positionBall.y != rayonBall)
     {
-        xball = cord1[k1].x;
-        yball = cord1[k1].y + rayonBall;
-        zball = cord1[k1].z;
+        positionBall.x = cord1[k1].x;
+        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 4 && yball == rayonBall)
+        if (etage == 4 && positionBall.y == rayonBall)
         {
             etage = 2;
         }
     }
 
-    if (etage == 2 && xball >= 0 && zball == -(rayonTore + largeur / 2))
+    if (etage == 2 && positionBall.x >= 0 && positionBall.z == -(rayonTore + largeur / 2))
     {
-        xball += 1.2F / 10.0;
+        positionBall.x += 1.2F / 10.0;
     }
     else
     {
-        if (etage == 2 && xball <= 0 && cord2[k3].z != 0)
+        if (etage == 2 && positionBall.x <= 0 && cord2[k3].z != 0)
         {
-            xball = cord2[k3].x;
-            yball = cord2[k3].y + rayonBall;
-            zball = cord2[k3].z;
+            positionBall.x = cord2[k3].x;
+            positionBall.y = cord2[k3].y + rayonBall;
+            positionBall.z = cord2[k3].z;
             k3++;
         }
         else
         {
-            if (etage == 2 && xball <= 80.0)
+            if (etage == 2 && positionBall.x <= 80.0)
             {
-                xball -= 1.2F / 10.0;
+                positionBall.x -= 1.2F / 10.0;
             }
             else
             {
-                if (xball >= 80.0 && etage == 2)
+                if (positionBall.x >= 80.0 && etage == 2)
                 {
                     etage = 5;
                 }
@@ -1065,24 +1086,24 @@ static void balldroite(void) {
 
     }
 
-    if (etage == 5 && yball != -40 + rayonBall)
+    if (etage == 5 && positionBall.y != -40 + rayonBall)
     {
-        xball = cord1[k1].x;
-        yball = cord1[k1].y + rayonBall;
-        zball = cord1[k1].z;
+        positionBall.x = cord1[k1].x;
+        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 5 && yball == -40 + rayonBall)
+        if (etage == 5 && positionBall.y == -40 + rayonBall)
         {
             etage = 1;
         }
     }
 
-    if (etage == 1 && xball >= -(rayonTore + largeur + 20) + rayonBall && zball == rayonTore + largeur / 2)
+    if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
-        xball += 1.2F / 10.0;
+        positionBall.x += 1.2F / 10.0;
     }
 
 
@@ -1090,9 +1111,9 @@ static void balldroite(void) {
 
 
 
-    printf("X : %f\n", xball);
-    printf("Y : %f\n", yball);
-    printf("Z : %f\n", zball);
+    printf("X : %f\n", positionBall.x);
+    printf("Y : %f\n", positionBall.y);
+    printf("Z : %f\n", positionBall.z);
 
 
     printf("etage : %d\n", etage);
@@ -1207,7 +1228,13 @@ static void keyboard(unsigned char key, int x, int y) {
         glutPostRedisplay();
         break;
     case 'v': //Permet de switcher en mode fils de fer avec la touche "espace"
-        affS = 1 - affS;
+        //affS = 1 - affS;
+        if (laBalle.getTypeAffiche()) {
+            laBalle.changerAffichage(false);
+        }
+        else {
+            laBalle.changerAffichage(true);
+        }
         glutPostRedisplay();
         break;
 

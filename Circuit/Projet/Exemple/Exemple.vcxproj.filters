@@ -30,13 +30,7 @@
     <Library Include="..\..\Lib\glut32.ms.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CH3D.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
     <ClCompile Include="Dir3D.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
-    <ClCompile Include="Pos3d.cpp">
       <Filter>Source Files\TPS\TP8</Filter>
     </ClCompile>
     <ClCompile Include="TG3D.cpp">
@@ -180,18 +174,21 @@
     <ClCompile Include="..\..\Src\PNG\Png\inffast.c">
       <Filter>Source Files\PNG\Png</Filter>
     </ClCompile>
+    <ClCompile Include="Pos3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CH3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Balle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CH3D.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
     <ClInclude Include="TG3D.h">
       <Filter>Source Files\TPS\TP8</Filter>
     </ClInclude>
     <ClInclude Include="Dir3D.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
-    <ClInclude Include="Pos3d.h">
       <Filter>Source Files\TPS\TP8</Filter>
     </ClInclude>
     <ClInclude Include="Tr3d.h">
@@ -256,6 +253,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\PNG\Png\inffast.h">
       <Filter>Source Files\PNG\Png</Filter>
+    </ClInclude>
+    <ClInclude Include="CH3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pos3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Balle.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
