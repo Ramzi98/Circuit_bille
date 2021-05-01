@@ -121,7 +121,6 @@ static GLfloat pts6[6][4] = {
   { 80.0F,-40.0F,(rayonTore + largeur / 2), 1.0F },
 };
 
-
 static polygone pl;
 static int aff = 3;
 
@@ -317,6 +316,7 @@ float distance = 0.0F;
 
 
 
+
 void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 {
     //printf("X = %f , Y = %f , Z = %f \n", p1[0], p1[1], p1[2]);
@@ -343,13 +343,70 @@ void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
    
 }
 
+void cylindre(Pos3D pos, GLUquadricObj* qobj, double h, double r0, int n, int m) {
+    glPushMatrix();
+    glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+    glTranslatef(0.0F, 0.0F, -h / 2);
+    glTranslatef(pos.x, pos.y, pos.z);
+    //GLUquadricObj* qobj = q; 
+    gluQuadricDrawStyle(qobj, GLU_FILL);
+    gluCylinder(qobj, r0, r0, h, n, m);
+    //gluDeleteQuadric(qobj);
+    glPopMatrix();
+}
+
+
+void ascenceur1(double x, double y, double z)
+{
+    glPushMatrix();
+
+    glTranslatef(x, y, z);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
+    //Pos3D pilier2(largeur / 2, -40.0, largeur / 2);
+    Pos3D pilier1(0, 0, 0);
+    GLUquadricObj* po1 = gluNewQuadric();
+    cylindre(pilier1,po1, 80, 3, 15, 15);
+    gluDeleteQuadric(po1);
+
+    //Circuit_droit(p1, p2, p3, p4);
+    Pos3D pilier2(largeur, 0.0, 0.0);
+    GLUquadricObj* po2 = gluNewQuadric();
+    cylindre(pilier2, po2, 80, 3, 15, 15);
+    gluDeleteQuadric(po2);
+
+    
+    Pos3D pilier3(largeur, -20.0, 0.0);
+    GLUquadricObj* po3 = gluNewQuadric();
+    cylindre(pilier3, po3, 80, 3, 10, 10);
+    gluDeleteQuadric(po3);
+    
+     Pos3D pilier4( 0.0, -20.0, 0.0);
+     GLUquadricObj* po4 = gluNewQuadric();
+     cylindre(pilier4, po4, 80, 3, 10, 10);
+     gluDeleteQuadric(po4);
+    
+     //Base 
+     double p1[] = { 0, 0, 0 };//1
+     double p2[] = { largeur, 0, 0 };//2
+     double p3[] = { largeur, 0.0, -20.0 };//3
+     double p4[] = { 0.0, 0.0, -20.0 };//4
+     Circuit_droit(p1, p2, p3, p4);
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+    glPopMatrix();
+
+}
+
 
 void etage1_3(double x, double y, double z)
 {
     glPushMatrix();
     glTranslatef(x, y, z);
-   
     glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+
+
+
 
     //Bord interieur 1 
     double p1[] = { 0.0, 0.0, -rayonTore };
@@ -390,6 +447,105 @@ void etage1_3(double x, double y, double z)
     glPopMatrix();
 }
 
+
+void etage3(double x, double y, double z)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+
+
+
+
+    //Bord interieur 1 
+    double p1[] = { 20.0, 0.0, -rayonTore };
+    double p2[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p3[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
+    double p4[] = { 20.0, hauteur_bord, -rayonTore };
+    Circuit_droit(p1, p2, p3, p4);
+
+
+    //Bord exterieur 1
+    double p5[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double p6[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p7[] = { 80.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
+    double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    Circuit_droit(p5, p6, p7, p8);
+
+
+
+
+    //Fin1
+    double pf5[] = { 0.0, 0.0, -rayonTore };
+    double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double pf7[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    double pf8[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(pf5, pf6, pf7, pf8);
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
+
+    //La Base 1
+    double p21[] = { 0.0, 0.0, -rayonTore };
+    double p22[] = { 80.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p23[] = { 80.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p24[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    Circuit_droit(p21, p22, p23, p24);
+
+
+
+    glPopMatrix();
+}
+
+void pont(double x, double y, double z) {
+    glPushMatrix();
+    glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
+
+
+
+
+    //Bord interieur 1 
+    double p1[] = { 0.0, 0.0, -rayonTore };
+    double p2[] = { 0.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p3[] = { 0.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
+    double p4[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(p1, p2, p3, p4);
+
+
+    //Bord exterieur 1
+    double p5[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double p6[] = { 0.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p7[] = { 0.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
+    double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    Circuit_droit(p5, p6, p7, p8);
+
+
+
+
+    //Fin1
+    double pf5[] = { 0.0, 0.0, -rayonTore };
+    double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
+    double pf7[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
+    double pf8[] = { 0.0, hauteur_bord, -rayonTore };
+    Circuit_droit(pf5, pf6, pf7, pf8);
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
+
+    //La Base 1
+    double p21[] = { 20.0, 0.0, -rayonTore };
+    double p22[] = { 12.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p23[] = { 12.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p24[] = { 20.0, 0.0, -(rayonTore + largeur) };
+    Circuit_droit(p21, p22, p23, p24);
+
+
+
+    glPopMatrix();
+    
+    glPopMatrix();
+}
 
 
 
@@ -730,11 +886,9 @@ static void display(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, (laBalle.getTypeAffiche()) ? GL_FILL : GL_LINE);// Transformation fil de fer
 
-   
-
-
     glPushMatrix();
-
+    //scene5();
+    //scene6();
     if (texture)
         glEnable(GL_TEXTURE_2D);
     else
@@ -805,8 +959,10 @@ static void display(void) {
         etage2(0.0,0.0,0.0);
 
         
-        etage1_3(-(rayonTore + largeur + 20), 40.0, 0.0);
-        etage1_3(-(rayonTore + largeur + 20), -40.0, rayonTore + 2*largeur);
+        etage3(-(rayonTore + largeur + 20), 40.0, 0.0); //étage 3
+        etage1_3(-(rayonTore + largeur + 20), -40.0, rayonTore + 2*largeur); //étage 1
+        ascenceur1(-(rayonTore + largeur + 20), 0.0, rayonTore + 2 * largeur-20);// ascenceur1
+        pont(-(rayonTore + 20), 40.0, -20.0);
 
         //Sphere(xball,yball,zball);
         laBalle.dessiner(positionBall, rayonBall, 36, 36);
