@@ -121,6 +121,18 @@ static GLfloat pts6[6][4] = {
   { 80.0F,-40.0F,(rayonTore + largeur / 2), 1.0F },
 };
 
+static double axesElevator[4][3] = {
+  { 0, -40, 0 },//1
+  { largeur, -40, 0 },//2
+  { largeur, -40.0, -20.0 },//3
+  { 0.0, -40.0, -20.0 }//4
+};
+
+double p1[] = { 0, 0, 0 };//1
+double p2[] = { largeur, 0, 0 };//2
+double p3[] = { largeur, 0.0, -20.0 };//3
+double p4[] = { 0.0, 0.0, -20.0 };//4
+
 static polygone pl;
 static int aff = 3;
 
@@ -387,11 +399,8 @@ void ascenceur1(double x, double y, double z)
      gluDeleteQuadric(po4);
     
      //Base 
-     double p1[] = { 0, 0, 0 };//1
-     double p2[] = { largeur, 0, 0 };//2
-     double p3[] = { largeur, 0.0, -20.0 };//3
-     double p4[] = { 0.0, 0.0, -20.0 };//4
-     Circuit_droit(p1, p2, p3, p4);
+     
+     Circuit_droit(axesElevator[0], axesElevator[1], axesElevator[2], axesElevator[3]);
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
     glPopMatrix();
@@ -1162,16 +1171,40 @@ static void ball(void) {
     if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
         positionBall.x -= 1.0F / 10.0;
+        //Code ascenceur
+        if (positionBall.x >= -58.0F && positionBall.x <= -45.0F) {
+            etage = 6;
+        }
+    }
+    if (etage == 6) {
+        positionBall.y += 1.0F / 10.0;
+        axesElevator[0][1] += 1.0F / 10.0;
+        axesElevator[1][1] += 1.0F / 10.0;
+        axesElevator[2][1] += 1.0F / 10.0;
+        axesElevator[3][1] += 1.0F / 10.0;
+        if (positionBall.y >= (float)(37.0+20- 2*hauteur_bord) && positionBall.y <= (float)(37.0 +20 -2* hauteur_bord)+1) {
+            etage = 7;
+            printf("x actu %f\n", positionBall.x);
+            printf("x init %f\n", rayonBall, -(rayonTore + largeur / 2));
+            //exit (0);
+        }  
+    }
+    if (etage == 7) {
+        positionBall.z -= 1.0F / 10.0;
+        if (positionBall.z >= -33.0 && positionBall.z <= -30.0) {
+            etage = 1;
+        }
+        
+        printf("Xxxx : %f\n", positionBall.x);
+        printf("Yyyyy : %f\n", positionBall.y);
+        printf("Zzzzz : %f\n", positionBall.z);
+        printf("etage 7\n");
     }
 
 
-
-
-
-
-    printf("X : %f\n", positionBall.x);
-    printf("Y : %f\n", positionBall.y);
-    printf("Z : %f\n", positionBall.z);
+    printf("Xxxx : %f\n", positionBall.x);
+    printf("Yyyyy : %f\n", positionBall.y);
+    printf("Zzzzz : %f\n", positionBall.z);
 
 
     printf("etage : %d\n", etage);
@@ -1260,7 +1293,12 @@ static void balldroite(void) {
     if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
         positionBall.x += 1.2F / 10.0;
+        //Code ascenceur
+        if (positionBall.x == -45.0) {
+            etage = 6;
+        }
     }
+    
 
 
 

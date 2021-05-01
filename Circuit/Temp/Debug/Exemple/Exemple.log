@@ -19,5 +19,7 @@ C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\E
 C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(116,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(120,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(121,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(1188,46): warning C4474: 'printf' : trop d'arguments passés pour la chaîne de format
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(1188,46): message : les espaces réservés et leurs paramètres attendent des arguments 1 variadiques, mais des arguments 2 ont été fournis
   Exemple.vcxproj -> C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).
