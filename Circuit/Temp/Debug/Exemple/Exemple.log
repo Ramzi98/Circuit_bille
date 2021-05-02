@@ -1,20 +1,25 @@
 ﻿cl : ligne de commande warning D9035: l'option 'Gm' est déconseillée et sera supprimée dans une version ultérieure
   Circuit.cpp
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(81,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(82,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(83,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(88,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(89,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(90,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(94,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(95,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(100,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(101,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(102,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(107,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(108,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(109,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(113,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(114,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-  Exemple.vcxproj -> C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Balle.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\CH3D.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\CH3D.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(88,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(89,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(90,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(95,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(96,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(97,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(101,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(102,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(107,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(108,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(109,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(114,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(115,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(116,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(120,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(121,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(1188,46): warning C4474: 'printf' : trop d'arguments passés pour la chaîne de format
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Projet\Exemple\Circuit.cpp(1188,46): message : les espaces réservés et leurs paramètres attendent des arguments 1 variadiques, mais des arguments 2 ont été fournis
+  Exemple.vcxproj -> C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version3\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).
