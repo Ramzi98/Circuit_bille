@@ -61,13 +61,18 @@ static float positionBall.z = -(rayonTore + largeur / 2);*/
 Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(rayonTore + largeur / 2));
 //Création balle
 Balle laBalle;
-
+bool ligth1 = false, ligth2 = false, ligth3 = false, ligth4 = false;
 
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
 static const float rouge[] = { 1.0F,0.0F,0.0F,1.0F };
 static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
+static const float gris[] = { 0.5F,0.5F,0.5F,1.0F };
+static const float noir[] = { 0.0F,0.0F,0.0F,1.0F };
+static int cFond = 0;              // Numero de la couleur de fond (0: gris, 1: blanc, 2:noir)
+
+
 
 coord_3D cord1[100000];
 coord_3D cord2[100000];
@@ -882,10 +887,21 @@ void relie_etage_3_2(double x, double y, double z)
 static void display(void) {
 
 
-
-    printf("D\n");
-    glClearColor(0.5F, 0.5F, 0.5F, 0.5F);
+    const float* fond;
+    switch (cFond) {
+    case 0:
+        fond = gris;
+        break;
+    case 1:
+        fond = blanc;
+        break;
+    case 2:
+        fond = noir;
+        break;
+    }
+    glClearColor(fond[0], fond[1], fond[2], fond[3]);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    printf("D\n");
     const GLfloat light0_position[] = { 0.0,0.0,0.0,1.0 };
     const GLfloat light1_position[] = { -1.0,1.0,1.0,0.0 };
     const GLfloat light2_position[] = { 1.0,-1.0,1.0,0.0 };
@@ -1228,6 +1244,9 @@ static void balldroite(void) {
         }
     }
 
+
+
+
     if (etage == 4 && positionBall.y != rayonBall)
     {
         positionBall.x = cord1[k1].x;
@@ -1371,7 +1390,10 @@ static void special(int key, int x, int y) {
 
 static void keyboard(unsigned char key, int x, int y) {
     switch (key) {
- 
+    case 'k':
+    { cFond = (cFond + 1) % 3;
+    glutPostRedisplay(); }
+    break;
     case 0x0D:
     { static int anim = 0;
 
@@ -1457,6 +1479,16 @@ static void keyboard(unsigned char key, int x, int y) {
 
         break;
 
+    case 'l':
+        if (glIsEnabled(GL_LIGHTING) == true)
+        {
+            glDisable(GL_LIGHTING);
+        }
+        else
+        {
+            glEnable(GL_LIGHTING);
+        }
+        break;
 
 
     }
