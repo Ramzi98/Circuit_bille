@@ -61,7 +61,9 @@ static float positionBall.z = -(rayonTore + largeur / 2);*/
 Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(rayonTore + largeur / 2));
 //Création balle
 Balle laBalle;
-bool ligth1 = false, ligth2 = false, ligth3 = false, ligth4 = false;
+bool ligth1 = false, ligth2 = false, ligth3 = false, ligth4 = false, ligth5 = false ;
+static float spotDir[3] = { 3.0, 3.0,-10.0 };
+const GLfloat spotCutOff = 20.0;
 
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
 static const float jaune[] = { 1.0F,1.0F,0.0F,1.0F };
@@ -156,6 +158,68 @@ void bas_relie(float x, float y, float z) {
    
           
 }
+
+void lighting1()
+{
+    GLfloat pos[4] = { 2.0, 2.0, 2.0, 1.0 };
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT3, GL_POSITION, pos);
+    glEnable(GL_LIGHT3);
+}
+
+void lighting2()
+{
+    GLfloat pos[4] = { -2.0, 0.0, 4.0, 0.0 };
+    glLightfv(GL_LIGHT4, GL_POSITION, pos);
+    glLightfv(GL_LIGHT4, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT4, GL_SPECULAR, blanc);
+    glEnable(GL_LIGHT4);
+}
+
+void lighting3()
+{
+    GLfloat pos[4] = { -3.0,-3.0, 15.0, 1.0 };
+    glLightfv(GL_LIGHT5, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT5, GL_POSITION, pos);
+    glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spotDir);
+    glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, spotCutOff);
+    glEnable(GL_LIGHT5);
+}
+
+
+void lighting4()
+{
+    GLfloat pos[4] = { 0.0,0.0,0.0,1.0 };
+
+    glLightfv(GL_LIGHT6, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT6, GL_POSITION, pos);
+    glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, spotDir);
+    glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, spotCutOff);
+    glEnable(GL_LIGHT6);
+}
+
+void lighting5()
+{
+    GLfloat pos[4] = { -1.0,1.0,1.0,0.0 };;
+    glLightfv(GL_LIGHT7, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT7, GL_POSITION, pos);
+    glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, spotDir);
+    glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, spotCutOff);
+    glEnable(GL_LIGHT7);
+}
+
+void lighting6()
+{
+    GLfloat pos[4] = { -1.0,1.0,1.0,0.0 };;
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, vert);
+    glLightfv(GL_LIGHT0, GL_POSITION, pos);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDir);
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, spotCutOff);
+    glEnable(GL_LIGHT0);
+}
+
+
+
 
 void interieur_relie(float x, float y, float z) {
     glVertex3f(x, y, (z + largeur / 2));
@@ -311,6 +375,12 @@ static void init(void) {
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
     glEnable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT4);
+    glEnable(GL_LIGHT5);
+    glEnable(GL_LIGHT6);
+    glEnable(GL_LIGHT7);
+
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
@@ -909,6 +979,50 @@ static void display(void) {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
 
+    if (ligth1 == true)
+    {
+        lighting1();
+    }
+    else
+    {
+        glDisable(GL_LIGHT3);
+    }
+
+    if (ligth2 == true)
+    {
+        lighting2();
+    }
+    else
+    {
+        glDisable(GL_LIGHT4);
+    }
+
+    if (ligth3 == true)
+    {
+        lighting3();
+    }
+    else
+    {
+        glDisable(GL_LIGHT5);
+    }
+    if (ligth4 == true)
+    {
+        lighting4();
+    }
+    else
+    {
+        glDisable(GL_LIGHT6);
+    }
+    if (ligth5 == true)
+    {
+        lighting3();
+    }
+    else
+    {
+        glDisable(GL_LIGHT7);
+    }
+
+ 
     glPolygonMode(GL_FRONT_AND_BACK, (laBalle.getTypeAffiche()) ? GL_FILL : GL_LINE);// Transformation fil de fer
 
     glPushMatrix();
@@ -1382,7 +1496,29 @@ static void special(int key, int x, int y) {
         rz -= 1.0F;
         glutPostRedisplay();
         break;
+    case GLUT_KEY_F1:
+        ligth1 = !ligth1;
+        break;
+
+    case GLUT_KEY_F2:
+        ligth2 = !ligth2;
+        break;
+
+    case GLUT_KEY_F3:
+        ligth3 = !ligth3;
+        break;
+  
+
+    case GLUT_KEY_F4:
+        ligth4 = !ligth4;
+        break;
+
+    case GLUT_KEY_F5:
+        ligth5 = !ligth5;
+        break;
     }
+
+    
 }
 
 /* Fonction executee lors de l'appui            */
