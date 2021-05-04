@@ -3,24 +3,25 @@
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Balle.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\CH3D.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\CH3D.h(1,10): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(95,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(96,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(96,17): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(97,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(102,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(98,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(103,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(104,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(108,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(109,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(114,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(115,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(105,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(109,18): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(110,16): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(115,27): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(116,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(121,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(117,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(122,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
 C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(123,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(127,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(128,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1318,46): warning C4474: 'printf' : trop d'arguments passés pour la chaîne de format
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1318,46): message : les espaces réservés et leurs paramètres attendent des arguments 1 variadiques, mais des arguments 2 ont été fournis
-C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1619,41): warning C4805: '==' : mélange risqué de type 'GLboolean' et de type 'bool' dans l'opération
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(124,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(128,28): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(129,29): warning C4838: la conversion de 'double' en 'GLfloat' requiert une conversion restrictive
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1593,46): warning C4474: 'printf' : trop d'arguments passés pour la chaîne de format
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1593,46): message : les espaces réservés et leurs paramètres attendent des arguments 1 variadiques, mais des arguments 2 ont été fournis
+C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Projet\Exemple\Circuit.cpp(1903,41): warning C4805: '==' : mélange risqué de type 'GLboolean' et de type 'bool' dans l'opération
+ChargePngFile.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/SAFESEH'
   Exemple.vcxproj -> C:\Users\hp\Desktop\M1S2\ig\projet ig\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
           1 fichier(s) copié(s).

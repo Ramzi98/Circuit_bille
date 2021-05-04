@@ -22,7 +22,12 @@ static const float vert[] = { 0.0F,1.0F,0.0F,1.0F };
 static const float bleu[] = { 0.0F,0.0F,1.0F,1.0F };
 
 /* Variables globales                           */
-
+static int f1;
+static int f2;
+static void postRedisplay(void) {
+    glutPostWindowRedisplay(f1);
+    glutPostWindowRedisplay(f2);
+}
 static int cFond = 0;              // Numero de la couleur de fond (0: gris, 1: blanc, 2:noir)
 static float r1 = 0.0F;            // Angle de rotation de la scene sur elle-meme
 static float r2 = 0.0F;            // Angle de rotation de la scene sur elle-meme

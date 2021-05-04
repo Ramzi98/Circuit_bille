@@ -51,9 +51,6 @@
     <ClCompile Include="PlacageTexture.cpp">
       <Filter>Source Files\TPS</Filter>
     </ClCompile>
-    <ClCompile Include="TD2.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\TP2.cpp">
       <Filter>Source Files\TPS</Filter>
     </ClCompile>
@@ -182,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Balle.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TD2.cpp">
+      <Filter>Source Files\TPS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
