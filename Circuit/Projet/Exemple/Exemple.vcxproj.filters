@@ -200,5 +200,8 @@
     <ClInclude Include="Balle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TG3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
