@@ -63,7 +63,7 @@ Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(
 //Création balle
 Balle laBalle;
 bool ligth1 = false, ligth2 = false, ligth3 = false, ligth4 = false, ligth5 = false;
-static float spotDir[3] = { 3.0, 3.0,-10.0 };
+static float spotDir[3] = { 0.0, -1.0,0.0 };
 const GLfloat spotCutOff = 20.0;
 
 static const float blanc[] = { 1.0F,1.0F,1.0F,1.0F };
@@ -168,8 +168,10 @@ void bas_relie(float x, float y, float z) {
 
 void lighting1()
 {
-    GLfloat pos[4] = { 2.0, 2.0, 2.0, 1.0 };
-    glLightfv(GL_LIGHT3, GL_DIFFUSE, vert);
+    //GLfloat pos[4] = { 60.0, 80.0, 0.0, 1.0 };
+    //GLfloat pos[4] = { -10.0, 40.0, 4.0, 0.0 };
+    GLfloat pos[4] = { -(rayonTore + largeur + 20), -100.0, -20.0, 1.0 };
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, blanc);
     glLightfv(GL_LIGHT3, GL_POSITION, pos);
     glEnable(GL_LIGHT3);
 }
@@ -177,6 +179,7 @@ void lighting1()
 void lighting2()
 {
     GLfloat pos[4] = { -2.0, 0.0, 4.0, 0.0 };
+   // GLfloat pos[4] = { 60.0, 80.0, 0.0, 1.0 };
     glLightfv(GL_LIGHT4, GL_POSITION, pos);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, vert);
     glLightfv(GL_LIGHT4, GL_SPECULAR, blanc);
@@ -1597,7 +1600,10 @@ static void ball(void) {
     if (etage == 7) {
         positionBall.z -= 1.0F / 10.0;
         if (positionBall.z >= -33.0 && positionBall.z <= -30.0) {
-            etage = 1;
+            etage = 3;
+            positionBall.x = -(rayonTore + largeur + 20);
+            positionBall.y = 40.0 + rayonBall;
+            positionBall.z = -(rayonTore + largeur / 2);
         }
 
         printf("Xxxx : %f\n", positionBall.x);
