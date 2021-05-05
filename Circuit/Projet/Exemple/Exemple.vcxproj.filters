@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Source Files\TPS">
-      <UniqueIdentifier>{698ae401-15ff-4379-9349-21e61ca40080}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\TPS\TP8">
-      <UniqueIdentifier>{146d25f5-8832-4ed2-8a15-3e7b56c43082}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\PNG">
       <UniqueIdentifier>{d17a7cca-ef22-498f-82a1-f098a6149635}</UniqueIdentifier>
     </Filter>
@@ -30,50 +24,8 @@
     <Library Include="..\..\Lib\glut32.ms.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dir3D.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
-    <ClCompile Include="TG3D.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
-    <ClCompile Include="Tr3d.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
-    <ClCompile Include="Rt3d.cpp">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Exemple.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="ParametrageMaterielEtLumieres.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="PlacageTexture.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\TP2.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="TP3.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="TP4.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="TP7.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
     <ClCompile Include="Circuit.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Desktop\virtual_trackball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DeuxFenetres.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMemoire.cpp">
-      <Filter>Source Files\TPS</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\PNG\ChargePngFile.cpp">
       <Filter>Source Files\PNG</Filter>
@@ -180,23 +132,8 @@
     <ClCompile Include="Balle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TD2.cpp">
-      <Filter>Source Files\TPS</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TG3D.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
-    <ClInclude Include="Dir3D.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
-    <ClInclude Include="Tr3d.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
-    <ClInclude Include="Rt3D.h">
-      <Filter>Source Files\TPS\TP8</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\PNG\ChargePngFile.h">
       <Filter>Source Files\PNG</Filter>
     </ClInclude>
