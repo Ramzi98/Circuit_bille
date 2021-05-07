@@ -132,6 +132,9 @@
     <ClCompile Include="Balle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mafacette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\PNG\ChargePngFile.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TG3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mafacette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

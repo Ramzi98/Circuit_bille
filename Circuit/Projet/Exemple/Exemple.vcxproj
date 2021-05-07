@@ -136,6 +136,7 @@
     <ClCompile Include="Circuit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Mafacette.cpp" />
     <ClCompile Include="Pos3d.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="CH3D.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Mafacette.h" />
     <ClInclude Include="Pos3d.h" />
     <ClInclude Include="TG3D.h" />
   </ItemGroup>

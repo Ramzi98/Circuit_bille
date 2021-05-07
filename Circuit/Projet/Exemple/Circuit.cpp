@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -179,7 +178,7 @@ void lighting1()
 void lighting2()
 {
     GLfloat pos[4] = { -2.0, 0.0, 4.0, 0.0 };
-   // GLfloat pos[4] = { 60.0, 80.0, 0.0, 1.0 };
+    // GLfloat pos[4] = { 60.0, 80.0, 0.0, 1.0 };
     glLightfv(GL_LIGHT4, GL_POSITION, pos);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, vert);
     glLightfv(GL_LIGHT4, GL_SPECULAR, blanc);
@@ -1933,7 +1932,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(1200, 840);
     glutInitWindowPosition(50, 50);
-    f1= glutCreateWindow("Un circuit à bille");
+    f1 = glutCreateWindow("Un circuit à bille");
     init();
     glutKeyboardFunc(keyboard);
     glutReshapeFunc(reshape);
