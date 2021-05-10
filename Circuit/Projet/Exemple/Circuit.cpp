@@ -84,6 +84,8 @@ int k2 = 0;
 int k3 = 0;
 int cmpt1 = 0;
 int cmpt2 = 0;
+float vitesse1 = 1.0F;
+float vitesse2 = 1.0F;
 
 //Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
 //static int affS = 1;
@@ -365,7 +367,8 @@ static void initTexture(void) {
 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, rx, ry, 0, GL_RGB, GL_UNSIGNED_BYTE, img1);
     free(img1);
-    printf("Texture chargee %d\n", textureID); }
+    
+    }
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -980,7 +983,6 @@ static void display(void) {
     }
     glClearColor(fond[0], fond[1], fond[2], fond[3]);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    printf("D\n");
     const GLfloat light0_position[] = { 0.0,0.0,0.0,1.0 };
     const GLfloat light1_position[] = { -1.0,1.0,1.0,0.0 };
     const GLfloat light2_position[] = { 1.0,-1.0,1.0,0.0 };
@@ -1061,19 +1063,12 @@ static void display(void) {
         }
         else //3 étage
         {
-            if (positionBall.x > 80 && positionBall.x <= 120) {
-                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                rt -= 0.03;
+            if (positionBall.x > 80 && positionBall.x <= 160) {
+                gluLookAt(150, 80, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
             else
             {
-                if (positionBall.x > 120 && positionBall.x <= 160) {
-                    gluLookAt(positionBall.x - 10 + rt, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                    rt += 0.2;
-                }
-                else {
-                    gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                }
+                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
         }
     }
@@ -1119,32 +1114,32 @@ static void display(void) {
     pl.n = aff;
     pl.p = (coord_3D*)&pts[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
     pl.p = (coord_3D*)&pts2[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
 
 
     pl.n = 2;
     pl.p = (coord_3D*)&pts3[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 200, 1);
+    bezier(&pl, 29 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
     //////////////////////////////////////////////////////////
@@ -1155,31 +1150,31 @@ static void display(void) {
     pl.n = aff;
     pl.p = (coord_3D*)&pts4[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
     pl.p = (coord_3D*)&pts5[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
 
     pl.n = 2;
     pl.p = (coord_3D*)&pts6[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 200, 1);
+    bezier(&pl, 20 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
@@ -1212,7 +1207,6 @@ static void display2(void) {
     }
     glClearColor(fond[0], fond[1], fond[2], fond[3]);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    printf("D\n");
     const GLfloat light0_position[] = { 0.0,0.0,0.0,1.0 };
     const GLfloat light1_position[] = { -1.0,1.0,1.0,0.0 };
     const GLfloat light2_position[] = { 1.0,-1.0,1.0,0.0 };
@@ -1319,9 +1313,9 @@ static void display2(void) {
         }
         else //3 étage
         {
-            if (positionBall.x > 80 && positionBall.x <= 120) {
-                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                rt -= 0.03;
+            if (positionBall.x > 80 && positionBall.x <= 160) {
+                gluLookAt(150, 80, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+
             }
             else
             {
@@ -1350,19 +1344,13 @@ static void display2(void) {
         }
         else //3 étage
         {
-            if (positionBall.x > 80 && positionBall.x <= 120) {
-                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                rt -= 0.03;
+            if (positionBall.x > 80 && positionBall.x <= 160) {
+                gluLookAt(150, 80, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
             else
             {
-                if (positionBall.x > 120 && positionBall.x <= 160) {
-                    gluLookAt(positionBall.x - 10 + rt, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                    rt += 0.2;
-                }
-                else {
-                    gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                }
+                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
+                
             }
         }
     }
@@ -1387,32 +1375,32 @@ static void display2(void) {
     pl.n = aff;
     pl.p = (coord_3D*)&pts[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
     pl.p = (coord_3D*)&pts2[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
 
 
     pl.n = 2;
     pl.p = (coord_3D*)&pts3[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 200, 1);
+    bezier(&pl, 20 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
     //////////////////////////////////////////////////////////
@@ -1423,31 +1411,31 @@ static void display2(void) {
     pl.n = aff;
     pl.p = (coord_3D*)&pts4[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
     pl.p = (coord_3D*)&pts5[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 500, 1);
+    bezier(&pl, 50 * vitesse2, 1);
     glEnd();
 
     pl.n = 2;
     pl.p = (coord_3D*)&pts6[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 200, 1);
+    bezier(&pl, 20 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 2);
+    bezier(&pl, 5 * vitesse2, 2);
     glEnd();
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 40, 3);
+    bezier(&pl, 5 * vitesse2, 3);
     glEnd();
 
 
@@ -1472,37 +1460,11 @@ static void clean(void) {
         glDeleteTextures(1, &textureID);
 }
 
-
-/* Fonction executee lors d'un rafraichissement */
-/* de la fenetre de dessin                      */
-/*
-static void gestionAnimationSphere(void) {
-
-        glPushMatrix();
-        int n = distance / (longueur / 2.0F);
-        float p = distance - n * (longueur / 2.0F);
-        float angle = 360.0F * p / (longueur / 2.0F);
-        if (n == 0) {
-            glTranslatef(8.0F, 0.0F, 0.0F);
-            glRotatef(angle, 0.0F, 1.0F, 0.0F);
-            glTranslatef(-8.0F, 0.0F, 0.0F);
-        }
-        else {
-            glTranslatef(-8.0F, 0.0F, 0.0F);
-            glRotatef(-angle, 0.0F, 1.0F, 0.0F);
-            glTranslatef(8.0F, 0.0F, 0.0F);
-        }
-        glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
-        glutSolidSphere(1.2, 36, 36);
-        glPopMatrix();
-}
-*/
-
 static void ball(void) {
 
     if (positionBall.x <= 80.0 && etage == 3)
     {
-        positionBall.x += 1.0F / 10.0;
+        positionBall.x += vitesse1 ;
 
     }
     else
@@ -1513,16 +1475,16 @@ static void ball(void) {
         }
     }
 
-    if (etage == 4 && positionBall.y != rayonBall)
+    if (etage == 4 && positionBall.y != rayonBall + 1.0)
     {
         positionBall.x = cord1[k1].x;
-        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.y = cord1[k1].y + rayonBall + 1.0;
         positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 4 && positionBall.y == rayonBall)
+        if (etage == 4 && positionBall.y == rayonBall + 1.0)
         {
             etage = 2;
         }
@@ -1530,11 +1492,11 @@ static void ball(void) {
 
     if (etage == 2 && positionBall.x >= 0 && positionBall.z == -(rayonTore + largeur / 2))
     {
-        positionBall.x -= 1.0F / 10.0;
+        positionBall.x -= vitesse1;
     }
     else
     {
-        if (etage == 2 && positionBall.x <= 0 && cord2[k3].z != 0)
+        if (etage == 2 && positionBall.x <= 0 && cord2[k3].z != 0.0)
         {
             positionBall.x = cord2[k3].x;
             positionBall.y = cord2[k3].y + rayonBall;
@@ -1545,7 +1507,8 @@ static void ball(void) {
         {
             if (etage == 2 && positionBall.x <= 80.0)
             {
-                positionBall.x += 1.0F / 10.0;
+                positionBall.x += vitesse1;
+                
             }
             else
             {
@@ -1560,16 +1523,16 @@ static void ball(void) {
 
     }
 
-    if (etage == 5 && positionBall.y != -40 + rayonBall)
+    if (etage == 5 && positionBall.y != -40 + rayonBall + 1.0)
     {
         positionBall.x = cord1[k1].x;
-        positionBall.y = cord1[k1].y + rayonBall;
+        positionBall.y = cord1[k1].y + rayonBall + 1.0;
         positionBall.z = cord1[k1].z;
         k1++;
     }
     else
     {
-        if (etage == 5 && positionBall.y == -40 + rayonBall)
+        if (etage == 5 && positionBall.y == -40 + rayonBall + 1.0)
         {
             etage = 1;
         }
@@ -1577,7 +1540,7 @@ static void ball(void) {
 
     if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
-        positionBall.x -= 1.0F / 10.0;
+        positionBall.x -= vitesse1;
         //Code ascenceur
         if (positionBall.x >= -58.0F && positionBall.x <= -45.0F) {
             etage = 6;
@@ -1593,7 +1556,6 @@ static void ball(void) {
             etage = 7;
             printf("x actu %f\n", positionBall.x);
             printf("x init %f\n", rayonBall, -(rayonTore + largeur / 2));
-            //exit (0);
         }
     }
     if (etage == 7) {
@@ -1605,19 +1567,16 @@ static void ball(void) {
             positionBall.z = -(rayonTore + largeur / 2);
         }
 
-        printf("Xxxx : %f\n", positionBall.x);
-        printf("Yyyyy : %f\n", positionBall.y);
-        printf("Zzzzz : %f\n", positionBall.z);
-        printf("etage 7\n");
     }
 
-
+/*
     printf("Xxxx : %f\n", positionBall.x);
     printf("Yyyyy : %f\n", positionBall.y);
     printf("Zzzzz : %f\n", positionBall.z);
 
 
-    printf("etage : %d\n", etage);
+    printf("etage : %d\n", etage
+*/
 }
 
 
@@ -1627,7 +1586,7 @@ static void balldroite(void) {
 
     if (positionBall.x <= 80.0 && etage == 3)
     {
-        positionBall.x -= 1.0F / 10.0;
+        positionBall.x -= vitesse1;
 
     }
     else
@@ -1658,7 +1617,7 @@ static void balldroite(void) {
 
     if (etage == 2 && positionBall.x >= 0 && positionBall.z == -(rayonTore + largeur / 2))
     {
-        positionBall.x += 1.2F / 10.0;
+        positionBall.x += vitesse1;
     }
     else
     {
@@ -1673,7 +1632,7 @@ static void balldroite(void) {
         {
             if (etage == 2 && positionBall.x <= 80.0)
             {
-                positionBall.x -= 1.2F / 10.0;
+                positionBall.x -= vitesse1;
             }
             else
             {
@@ -1705,7 +1664,7 @@ static void balldroite(void) {
 
     if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
-        positionBall.x += 1.2F / 10.0;
+        positionBall.x += vitesse1;
         //Code ascenceur
         if (positionBall.x == -45.0) {
             etage = 6;
@@ -1716,7 +1675,7 @@ static void balldroite(void) {
 
 
 
-
+    /*
 
     printf("X : %f\n", positionBall.x);
     printf("Y : %f\n", positionBall.y);
@@ -1724,14 +1683,13 @@ static void balldroite(void) {
 
 
     printf("etage : %d\n", etage);
+    */
 }
 
 
 
 static void idle(void) {
-    printf("I\n");
     ball();
-
     postRedisplay();
 }
 
@@ -1939,7 +1897,7 @@ int main(int argc, char** argv) {
     glutIdleFunc(idle);
     glutSpecialFunc(special);
     glutDisplayFunc(display);
-    glutInitWindowSize(320, 240);
+    glutInitWindowSize(360, 340);
     glutInitWindowPosition(250, 100);
     f2 = glutCreateWindow("Fenêtre 2");
     init();

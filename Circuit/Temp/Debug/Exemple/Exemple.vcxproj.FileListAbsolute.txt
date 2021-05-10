@@ -1,5 +1,3 @@
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
-C:\Users\ramzi\source\repos\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.pdb
 C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Temp\Debug\Exemple\Exemple.exe
 C:\Users\hp\Desktop\M1S2\ig\circuit\Circuit\Temp\Debug\Exemple\Exemple.pdb
 C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version2\Ramzi98\Circuit_bille\Circuit\Temp\Debug\Exemple\Exemple.exe
