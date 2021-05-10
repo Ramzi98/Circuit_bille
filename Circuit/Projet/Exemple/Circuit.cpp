@@ -61,7 +61,7 @@ static float positionBall.z = -(rayonTore + largeur / 2);*/
 Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(rayonTore + largeur / 2));
 //Création balle
 Balle laBalle;
-bool ligth1 = false, ligth2 = false, ligth3 = false, ligth4 = false, ligth5 = false;
+bool ligth1 = true, ligth2 = true, ligth3 = true, ligth4 = true, ligth5 = true;
 static float spotDir[3] = { 0.0, -1.0,0.0 };
 const GLfloat spotCutOff = 20.0;
 
@@ -84,8 +84,10 @@ int k2 = 0;
 int k3 = 0;
 int cmpt1 = 0;
 int cmpt2 = 0;
-float vitesse1 = 1.0F;
-float vitesse2 = 1.0F;
+
+float vitesse1 = 0.5F;
+float vitesse2 = 3.0F;
+float vitesse3 = 3.0F;
 
 //Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
 //static int affS = 1;
@@ -169,8 +171,7 @@ void bas_relie(float x, float y, float z) {
 
 void lighting1()
 {
-    //GLfloat pos[4] = { 60.0, 80.0, 0.0, 1.0 };
-    //GLfloat pos[4] = { -10.0, 40.0, 4.0, 0.0 };
+
     GLfloat pos[4] = { -(rayonTore + largeur + 20), -100.0, -20.0, 1.0 };
     glLightfv(GL_LIGHT3, GL_DIFFUSE, blanc);
     glLightfv(GL_LIGHT3, GL_POSITION, pos);
@@ -288,8 +289,6 @@ void bezier(polygone* p, int n, int d) {
     cmpt1++;
     free(cn);
 }
-
-
 
 
 
@@ -418,8 +417,6 @@ float distance = 0.0F;
 
 void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 {
-    //printf("X = %f , Y = %f , Z = %f \n", p1[0], p1[1], p1[2]);
-
     glBegin(GL_QUADS);
 
     glNormal3f(p1[0], p1[1], p1[2]);
@@ -460,9 +457,7 @@ void ascenceur1(double x, double y, double z)
     glPushMatrix();
 
     glTranslatef(x, y, z);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    //Pos3D pilier2(largeur / 2, -40.0, largeur / 2);
     Pos3D pilier1(0, 0, 0);
     GLUquadricObj* po1 = gluNewQuadric();
     cylindre(pilier1, po1, 80, 3, 15, 15);
@@ -785,18 +780,7 @@ void Virage(double largeur, double rayonTore, double angleI, double angleF, int 
         float x2i = -rayonTore * sinalphaj;
         float y2i = hauteur_bord;
         float z2i = -rayonTore * cosalphaj;
-        /*
-        if (i < 10 )
-        {
-            printf("X1 = %f ", x1i);
-            printf("Y1 = %f ", y1i);
-            printf("Z1 = %f ", z1i);
-
-            printf("X2 = %f ", x2i);
-            printf("Y2 = %f ", y2i);
-            printf("Z2 = %f \n", z2i);
-        }
-        */
+  
         glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
 
         virage_board_interieur(x1i, y1i, z1i, x2i, y2i, z2i);
@@ -836,23 +820,6 @@ void Virage(double largeur, double rayonTore, double angleI, double angleF, int 
 }
 
 
-
-/*void Sphere(float x, float y, float z)
-{
-    glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, bleu);
-    glTranslatef(x, y, z);
-    if (affS) {
-        glutSolidSphere(rayonBall, 36, 36);
-    }
-    else {
-        glutWireSphere(rayonBall, 36, 36);
-    }
-    glPopMatrix();
-
-   // glTexCoord2d
-}
-*/
 static void etage2(double x, double y, double z) {
 
     glPushMatrix();
@@ -875,16 +842,6 @@ static void etage2(double x, double y, double z) {
     double p7[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
     Circuit_droit(p5, p6, p7, p8);
-
-
-    /*
-    //Fin1
-    double pf1[] = { 80.0, 0.0, -rayonTore };
-    double pf2[] = { 80.0, 0.0, -(rayonTore+largeur) };
-    double pf3[] = { 80.0, hauteur_bord, -(rayonTore + largeur) };
-    double pf4[] = { 80.0, hauteur_bord, -rayonTore };
-    Circuit_droit(pf1, pf2, pf3, pf4);
-    */
 
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
@@ -913,15 +870,6 @@ static void etage2(double x, double y, double z) {
     double p18[] = { 0.0, hauteur_bord, (rayonTore + largeur) };
     Circuit_droit(p15, p16, p17, p18);
 
-    /*
-    //Fin 2
-    double pf5[] = { 80.0, 0.0, rayonTore };
-    double pf6[] = { 80.0, 0.0, rayonTore + largeur };
-    double pf7[] = { 80.0, hauteur_bord, rayonTore + largeur };
-    double pf8[] = { 80.0, hauteur_bord, rayonTore };
-    Circuit_droit(pf5, pf6, pf7, pf8);
-    */
-
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, blanc);
 
@@ -939,7 +887,7 @@ static void etage2(double x, double y, double z) {
     //Virage
 
     glPushMatrix();
-    Virage(largeur, rayonTore, 0, M_PI, 800);
+    Virage(largeur, rayonTore, 0, M_PI, 50 * vitesse3);
     glPopMatrix();
 
 
@@ -1133,7 +1081,7 @@ static void display(void) {
     pl.n = 2;
     pl.p = (coord_3D*)&pts3[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 29 * vitesse2, 1);
+    bezier(&pl, 10 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     bezier(&pl, 5 * vitesse2, 2);
@@ -1168,7 +1116,7 @@ static void display(void) {
     pl.n = 2;
     pl.p = (coord_3D*)&pts6[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 20 * vitesse2, 1);
+    bezier(&pl, 10 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     bezier(&pl, 5 * vitesse2, 2);
@@ -1282,19 +1230,12 @@ static void display2(void) {
         }
         else //3 étage
         {
-            if (positionBall.x > 80 && positionBall.x <= 120) {
-                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                rt -= 0.03;
+            if (positionBall.x > 80 && positionBall.x <= 160) {
+                gluLookAt(150, 80, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
             else
             {
-                if (positionBall.x > 120 && positionBall.x <= 160) {
-                    gluLookAt(positionBall.x - 10 + rt, positionBall.y + 10, positionBall.z - rt, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                    rt += 0.2;
-                }
-                else {
-                    gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
-                }
+                gluLookAt(positionBall.x - 10, positionBall.y + 10, positionBall.z, positionBall.x, positionBall.y, positionBall.z, 0.0, 10.0, 0.0);
             }
         }
     }
@@ -1394,7 +1335,7 @@ static void display2(void) {
     pl.n = 2;
     pl.p = (coord_3D*)&pts3[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 20 * vitesse2, 1);
+    bezier(&pl, 10 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     bezier(&pl, 5 * vitesse2, 2);
@@ -1429,7 +1370,7 @@ static void display2(void) {
     pl.n = 2;
     pl.p = (coord_3D*)&pts6[0][0];
     glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 20 * vitesse2, 1);
+    bezier(&pl, 10 * vitesse2, 1);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     bezier(&pl, 5 * vitesse2, 2);
@@ -1439,11 +1380,7 @@ static void display2(void) {
     glEnd();
 
 
-
     glPopMatrix();
-
-
-
 
     glFlush();
     glutSwapBuffers();
@@ -1461,17 +1398,20 @@ static void clean(void) {
 }
 
 static void ball(void) {
-
     if (positionBall.x <= 80.0 && etage == 3)
     {
         positionBall.x += vitesse1 ;
-
+        axesElevator[0][1] = -40;
+        axesElevator[1][1] = -40;
+        axesElevator[2][1] = -40;
+        axesElevator[3][1] = -40;
     }
     else
     {
         if (positionBall.x >= 80.0 - rayonBall && etage == 3)
         {
             etage = 4;
+            k1 = 0;
         }
     }
 
@@ -1487,6 +1427,7 @@ static void ball(void) {
         if (etage == 4 && positionBall.y == rayonBall + 1.0)
         {
             etage = 2;
+            k3 = 0;
         }
     }
 
@@ -1512,6 +1453,7 @@ static void ball(void) {
             }
             else
             {
+
                 if (positionBall.x >= 80.0 && etage == 2)
                 {
                     etage = 5;
@@ -1559,34 +1501,24 @@ static void ball(void) {
         }
     }
     if (etage == 7) {
-        positionBall.z -= 1.0F / 10.0;
+        positionBall.z -= vitesse1;
         if (positionBall.z >= -33.0 && positionBall.z <= -30.0) {
             etage = 3;
-            positionBall.x = -(rayonTore + largeur + 20);
-            positionBall.y = 40.0 + rayonBall;
-            positionBall.z = -(rayonTore + largeur / 2);
         }
 
     }
-
-/*
-    printf("Xxxx : %f\n", positionBall.x);
-    printf("Yyyyy : %f\n", positionBall.y);
-    printf("Zzzzz : %f\n", positionBall.z);
-
-
-    printf("etage : %d\n", etage
-*/
 }
 
 
 static void balldroite(void) {
 
-
-
     if (positionBall.x <= 80.0 && etage == 3)
     {
         positionBall.x -= vitesse1;
+        axesElevator[0][1] = -40;
+        axesElevator[1][1] = -40;
+        axesElevator[2][1] = -40;
+        axesElevator[3][1] = -40;
 
     }
     else
@@ -1594,6 +1526,7 @@ static void balldroite(void) {
         if (positionBall.x >= 80.0 - rayonBall && etage == 3)
         {
             etage = 4;
+            k1 = 0;
         }
     }
 
@@ -1612,12 +1545,13 @@ static void balldroite(void) {
         if (etage == 4 && positionBall.y == rayonBall)
         {
             etage = 2;
+            k3 = 0;
         }
     }
 
     if (etage == 2 && positionBall.x >= 0 && positionBall.z == -(rayonTore + largeur / 2))
     {
-        positionBall.x += vitesse1;
+        positionBall.x -= vitesse1;
     }
     else
     {
@@ -1670,8 +1604,6 @@ static void balldroite(void) {
             etage = 6;
         }
     }
-
-
 
 
 
@@ -1903,8 +1835,6 @@ int main(int argc, char** argv) {
     init();
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(special);
-
-
     glutDisplayFunc(display2);
     glutReshapeFunc(reshape2);
     glutIdleFunc(idle);
