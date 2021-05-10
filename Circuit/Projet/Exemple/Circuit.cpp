@@ -6,8 +6,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#define WIDTH 640
-#define HEIGHT 480 
+#define WIDTH 1200
+#define HEIGHT 900 
 int nFullScreen = 1;
 
 
@@ -158,8 +158,6 @@ void bas_relie(float x, float y, float z) {
     glVertex3f(x, y, (z + largeur / 2));
     if (cmpt1 <= 20)
     {
-
-
         cord1[k].x = x;
         cord1[k].y = y;
         cord1[k].z = z;
@@ -905,6 +903,43 @@ void relie_etage_3_2(double x, double y, double z)
     glPopMatrix();
 }
 
+void dessinVirageBizier(GLfloat pts[][4], GLfloat pts1[][4], GLfloat pts2[][4])
+{
+
+    pl.n = aff;
+    pl.p = (coord_3D*)&pts[0][0];
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 50 * vitesse2, 1);
+    glEnd();
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 5 * vitesse2, 2);
+    glEnd();
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 5 * vitesse2, 3);
+    glEnd();
+
+
+    pl.p = (coord_3D*)&pts1[0][0];
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 50 * vitesse2, 1);
+    glEnd();
+
+
+    pl.n = 2;
+    pl.p = (coord_3D*)&pts2[0][0];
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 10 * vitesse2, 1);
+    glEnd();
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 5 * vitesse2, 2);
+    glEnd();
+    glBegin(GL_QUAD_STRIP);
+    bezier(&pl, 5 * vitesse2, 3);
+    glEnd();
+
+}
+
+
 
 
 
@@ -985,8 +1020,6 @@ static void display(void) {
     glPolygonMode(GL_FRONT_AND_BACK, (laBalle.getTypeAffiche()) ? GL_FILL : GL_LINE);// Transformation fil de fer
 
     glPushMatrix();
-    //scene5();
-    //scene6();
     if (texture)
         glEnable(GL_TEXTURE_2D);
     else
@@ -1059,73 +1092,11 @@ static void display(void) {
     laBalle.dessiner(positionBall, rayonBall, 36, 36);
 
     // Relie 3_2
-    pl.n = aff;
-    pl.p = (coord_3D*)&pts[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-
-    pl.p = (coord_3D*)&pts2[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-
-
-    pl.n = 2;
-    pl.p = (coord_3D*)&pts3[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 10 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-    //////////////////////////////////////////////////////////
+    dessinVirageBizier(pts, pts2, pts3);
 
 
      // Relie 2_1
-
-    pl.n = aff;
-    pl.p = (coord_3D*)&pts4[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-
-    pl.p = (coord_3D*)&pts5[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-
-    pl.n = 2;
-    pl.p = (coord_3D*)&pts6[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 10 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-
+    dessinVirageBizier(pts4, pts5, pts6);
 
     glPopMatrix();
 
@@ -1309,76 +1280,14 @@ static void display2(void) {
     ascenceur1(-(rayonTore + largeur + 20), 0.0, rayonTore + 2 * largeur - 20);// ascenceur1
     pont(-(rayonTore + 20), 40.0, -20.0);
 
-    //Sphere(xball,yball,zball);
     laBalle.dessiner(positionBall, rayonBall, 36, 36);
 
     // Relie 3_2
-    pl.n = aff;
-    pl.p = (coord_3D*)&pts[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
+    dessinVirageBizier(pts, pts2, pts3);
 
 
-    pl.p = (coord_3D*)&pts2[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-
-
-    pl.n = 2;
-    pl.p = (coord_3D*)&pts3[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 10 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-    //////////////////////////////////////////////////////////
-
-
-     // Relie 2_1
-
-    pl.n = aff;
-    pl.p = (coord_3D*)&pts4[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
-
-    pl.p = (coord_3D*)&pts5[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 50 * vitesse2, 1);
-    glEnd();
-
-    pl.n = 2;
-    pl.p = (coord_3D*)&pts6[0][0];
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 10 * vitesse2, 1);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 2);
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    bezier(&pl, 5 * vitesse2, 3);
-    glEnd();
-
+    // Relie 2_1
+    dessinVirageBizier(pts4, pts5, pts6);
 
     glPopMatrix();
 
@@ -1606,16 +1515,6 @@ static void balldroite(void) {
     }
 
 
-
-    /*
-
-    printf("X : %f\n", positionBall.x);
-    printf("Y : %f\n", positionBall.y);
-    printf("Z : %f\n", positionBall.z);
-
-
-    printf("etage : %d\n", etage);
-    */
 }
 
 
@@ -1820,7 +1719,7 @@ static void keyboard(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
-    glutInitWindowSize(1200, 840);
+    glutInitWindowSize(WIDTH, HEIGHT);
     glutInitWindowPosition(50, 50);
     f1 = glutCreateWindow("Un circuit à bille");
     init();
