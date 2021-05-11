@@ -12,3 +12,5 @@ C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version6\Circuit\Temp\Deb
 C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version6\Circuit\Temp\Debug\Exemple\Exemple.pdb
 C:\Users\hp\Desktop\M1S2\ball\Circuit\Temp\Debug\Exemple\Exemple.exe
 C:\Users\hp\Desktop\M1S2\ball\Circuit\Temp\Debug\Exemple\Exemple.pdb
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version8\Circuit\Temp\Debug\Exemple\Exemple.exe
+C:\Users\jeanl\OneDrive\Documents\M2-ISL\IG\projet2021\Version8\Circuit\Temp\Debug\Exemple\Exemple.pdb

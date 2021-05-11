@@ -596,27 +596,18 @@ void pont(double x, double y, double z) {
     glTranslatef(x, y, z);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, rouge);
 
-
-
-
     //Bord interieur 1 
     double p1[] = { 0.0, 0.0, -rayonTore };
     double p2[] = { 0.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
     double p3[] = { 0.0 + rayonTore + largeur + 20, hauteur_bord, -rayonTore };
     double p4[] = { 0.0, hauteur_bord, -rayonTore };
     Circuit_droit(p1, p2, p3, p4);
-
-
     //Bord exterieur 1
     double p5[] = { 0.0, 0.0, -(rayonTore + largeur) };
     double p6[] = { 0.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p7[] = { 0.0 + rayonTore + largeur + 20, hauteur_bord, -(rayonTore + largeur) };
     double p8[] = { 0.0, hauteur_bord, -(rayonTore + largeur) };
     Circuit_droit(p5, p6, p7, p8);
-
-
-
-
     //Fin1
     double pf5[] = { 0.0, 0.0, -rayonTore };
     double pf6[] = { 0.0, 0.0, -(rayonTore + largeur) };
@@ -628,8 +619,8 @@ void pont(double x, double y, double z) {
 
     //La Base 1
     double p21[] = { 20.0, 0.0, -rayonTore };
-    double p22[] = { 12.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
-    double p23[] = { 12.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
+    double p22[] = { 2.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p23[] = { 0.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p24[] = { 20.0, 0.0, -(rayonTore + largeur) };
     Circuit_droit(p21, p22, p23, p24);
 
