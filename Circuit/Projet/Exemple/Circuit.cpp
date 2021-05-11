@@ -85,9 +85,9 @@ int k3 = 0;
 int cmpt1 = 0;
 int cmpt2 = 0;
 
-float vitesse1 = 0.5F;
-float vitesse2 = 3.0F;
-float vitesse3 = 3.0F;
+float vitesse1 = 0.2F;
+float vitesse2 = 6.0F;
+float vitesse3 = 6.0F;
 
 //Variable pour switcher d'affichage entre mode par facette et mode en fil de fer
 //static int affS = 1;
@@ -619,7 +619,7 @@ void pont(double x, double y, double z) {
 
     //La Base 1
     double p21[] = { 20.0, 0.0, -rayonTore };
-    double p22[] = { 2.0 + rayonTore + largeur + 20, 0.0, -rayonTore };
+    double p22[] = { 0.0 + rayonTore + largeur + 20, 0.0, -rayonTore};
     double p23[] = { 0.0 + rayonTore + largeur + 20, 0.0, -(rayonTore + largeur) };
     double p24[] = { 20.0, 0.0, -(rayonTore + largeur) };
     Circuit_droit(p21, p22, p23, p24);
@@ -1309,10 +1309,10 @@ static void ball(void) {
     if (positionBall.x <= 80.0 && etage == 3)
     {
         positionBall.x += vitesse1 ;
-        axesElevator[0][1] = -40;
-        axesElevator[1][1] = -40;
-        axesElevator[2][1] = -40;
-        axesElevator[3][1] = -40;
+        axesElevator[0][1] = -40 + 0.01;
+        axesElevator[1][1] = -40 + 0.01;
+        axesElevator[2][1] = -40 + 0.01;
+        axesElevator[3][1] = -40 + 0.01;
     }
     else
     {
@@ -1423,10 +1423,10 @@ static void balldroite(void) {
     if (positionBall.x <= 80.0 && etage == 3)
     {
         positionBall.x -= vitesse1;
-        axesElevator[0][1] = -40;
-        axesElevator[1][1] = -40;
-        axesElevator[2][1] = -40;
-        axesElevator[3][1] = -40;
+        axesElevator[0][1] = -40 + 0.01;
+        axesElevator[1][1] = -40 + 0.01;
+        axesElevator[2][1] = -40 + 0.01;
+        axesElevator[3][1] = -40 + 0.01;
 
     }
     else
