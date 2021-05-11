@@ -9,15 +9,18 @@ class Balle
 private: 
 	bool typeAffiche;// false pour fils de fer et true pour plein
 	float couleur[4];
+	GLint slices;
+	GLint stacks;
+public:
+	Pos3D positionBall;
+	GLdouble radius;
 public:
 	Balle(void);
-	void dessiner(Pos3D position, GLdouble radius, GLint slices, GLint stacks);
+	Balle(Pos3D pos, GLdouble r);
+	void dessiner(Pos3D position);
 	void changerAffichage(bool b);
 	bool getTypeAffiche();
-
-	/*Pos3D(void);
-	Pos3D(float xp, float yp, float zp);
-	Pos3D(Pos3D* p);*/
+	void move(GLdouble rayonBall, int etage);
 	
 
 	

@@ -60,7 +60,7 @@ static float positionBall.y = 40.0 + rayonBall;
 static float positionBall.z = -(rayonTore + largeur / 2);*/
 Pos3D positionBall(-(rayonTore + largeur + 20) + rayonBall, 40.0 + rayonBall, -(rayonTore + largeur / 2));
 //Création balle
-Balle laBalle;
+Balle laBalle(positionBall, rayonBall);
 bool ligth1 = true, ligth2 = true, ligth3 = true, ligth4 = true, ligth5 = true;
 static float spotDir[3] = { 0.0, -1.0,0.0 };
 const GLfloat spotCutOff = 20.0;
@@ -1088,7 +1088,7 @@ static void display(void) {
     pont(-(rayonTore + 20), 40.0, -20.0);
 
     //Sphere(xball,yball,zball);
-    laBalle.dessiner(positionBall, rayonBall, 36, 36);
+    laBalle.dessiner(positionBall);
 
     // Relie 3_2
     dessinVirageBizier(pts, pts2, pts3);
@@ -1279,7 +1279,7 @@ static void display2(void) {
     ascenceur1(-(rayonTore + largeur + 20), 0.0, rayonTore + 2 * largeur - 20);// ascenceur1
     pont(-(rayonTore + 20), 40.0, -20.0);
 
-    laBalle.dessiner(positionBall, rayonBall, 36, 36);
+    laBalle.dessiner(positionBall);
 
     // Relie 3_2
     dessinVirageBizier(pts, pts2, pts3);
@@ -1483,12 +1483,8 @@ static void balldroite(void) {
                     etage = 5;
                 }
             }
-
         }
-
-
     }
-
     if (etage == 5 && positionBall.y != -40 + rayonBall)
     {
         positionBall.x = cord1[k1].x;
@@ -1503,7 +1499,6 @@ static void balldroite(void) {
             etage = 1;
         }
     }
-
     if (etage == 1 && positionBall.x >= -(rayonTore + largeur + 20) + rayonBall && positionBall.z == rayonTore + largeur / 2)
     {
         positionBall.x += vitesse1;
@@ -1512,8 +1507,6 @@ static void balldroite(void) {
             etage = 6;
         }
     }
-
-
 }
 
 
