@@ -155,7 +155,11 @@ static void postRedisplay(void) {
 
 void bas_relie(float x, float y, float z) {
     glVertex3f(x, y, (z - largeur / 2));
+    glTexCoord2f(0.0F, 0.0F);
+
     glVertex3f(x, y, (z + largeur / 2));
+    glTexCoord2f(0.0F, 1.0F);
+
     if (cmpt1 <= 20)
     {
         cord1[k].x = x;
@@ -419,19 +423,19 @@ void Circuit_droit(double p1[], double p2[], double p3[], double p4[])
 
     glNormal3f(p1[0], p1[1], p1[2]);
     glVertex3f(p1[0], p1[1], p1[2]);
-    glTexCoord2f(0.0F, 0.0F);
+  //  glTexCoord2f(0.0F, 0.0F);
 
     glNormal3f(p2[0], p2[1], p2[2]);
     glVertex3f(p2[0], p2[1], p2[2]);
-    glTexCoord2f(0.0F, 1.0F);
+  //  glTexCoord2f(0.0F, 1.0F);
 
     glNormal3f(p3[0], p3[1], p3[2]);
     glVertex3f(p3[0], p3[1], p3[2]);
-    glTexCoord2f(1.0F, 1.0F);
+   // glTexCoord2f(1.0F, 1.0F);
 
     glNormal3f(p4[0], p4[1], p4[2]);
     glVertex3f(p4[0], p4[1], p4[2]);
-    glTexCoord2f(1.0F, 0.0F);
+    //glTexCoord2f(1.0F, 0.0F);
 
     glEnd();
 
@@ -643,16 +647,20 @@ void virage_bas(double x1, double y1, double z1, double x2, double y2, double z2
 {
     glNormal3f(x1, y1, -z1);
     glVertex3f(x1, y1, z1);
+    //glTexCoord2f(0.0F, 0.0F);
 
     glNormal3f(x2, y1, -z2);
     glVertex3f(x2, y1, z2);
+    //glTexCoord2f(0.0F, 1.0F);
 
 
     glNormal3f(x1, y2, -z1);
     glVertex3f(x1, y2, z1);
+  //  glTexCoord2f(1.0F, 0.0F);
 
     glNormal3f(x2, y2, -z2);
     glVertex3f(x2, y2, z2);
+  //  glTexCoord2f(1.0F, 1.0F);
 
     if (cmpt2 == 0)
     {
