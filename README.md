@@ -1,5 +1,5 @@
 # Circuit_bille
-- un jeu implémenter en OpenGL avec la bibliothèque GLUT
+- Un jeu implémenter en OpenGL avec la bibliothèque GLUT
 # Descriptif des techniques employées pour réaliser le travail :
 - Utilisation de la Modélisation à base d'ensembles de facettes pour la
 réalisation des trois étages du circuit , et des courbes de bézier pour les relier
